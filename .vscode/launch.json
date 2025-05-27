@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-PboApplication<pbo>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.uas.pbo.PboApplication",
+            "projectName": "pbo",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
