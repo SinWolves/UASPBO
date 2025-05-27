@@ -1,1 +1,1 @@
-Project Class Enrollment using Spring Website Frameworks 
+*Project Class Enrollment using Spring Website Frameworks.*
