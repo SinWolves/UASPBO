@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+</head>
+<body>
+    <form th:action="@{/login}" method="post">
+        <label for="identifier">Identitas (NIP/NIM/Email)</label><br>
+        <input type="text" name="identifier" id="identifier"><br>
+        <label for="pwd">Password</label><br>
+        <input type="password" name="pwd" id="pwd"><br>
+        <button type="submit">Login</button>
+    </form>
+</body>
+</html>
