@@ -1,18 +1,21 @@
 package com.uas.pbo;
 
+import com.uas.pbo.repository.userRepository;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestBody;
-
+import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
-public class LoginController {
-    @PostMapping("/login")
-    public String login(@RequestParam String identifier, @RequestParam String pwd) {
-        //TODO: process POST request
-        
-        return entity;
+public class loginController {
+
+    private final userRepository userRepository;
+
+    public loginController(userRepository userRepository) {
+        this.userRepository = userRepository;
     }
-    
+
+    // Add this method to serve the login page
+    @GetMapping("/login")
+    public String showLoginPage() {
+        return "login.html"; 
+    }
 }
