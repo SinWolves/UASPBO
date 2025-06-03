@@ -14,14 +14,14 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 public class SecurityConfig {
     
     @Autowired
-    private userRepository userRepository;  // Changed case to match your actual class
+    private userRepository userRepository;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/h2-console/**").permitAll()
-                .requestMatchers("/login", "/javascript/**").permitAll()
+                .requestMatchers("/login", "/javascript/**", "/CSS/**").permitAll()
                 .requestMatchers("/admin/**").hasRole("ADMIN")
                 .requestMatchers("/dosen/**").hasRole("DOSEN")
                 .requestMatchers("/mahasiswa/**").hasRole("MAHASISWA")
@@ -33,7 +33,15 @@ public class SecurityConfig {
                 .successHandler(roleBasedRedirectHandler())
                 .failureUrl("/login?error=true")
                 .permitAll()
+            )
+            // ↓↓↓ ADD THESE LINES FOR H2 CONSOLE ↓↓↓
+            .csrf(csrf -> csrf
+                .ignoringRequestMatchers("/h2-console/**") // Disable CSRF for H2
+            )
+            .headers(headers -> headers
+                .frameOptions(frame -> frame.disable()) // Allow H2 frames
             );
+        
         return http.build();
     }
 
