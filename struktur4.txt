@@ -2,10 +2,13 @@ Folder PATH listing for volume OS
 Volume serial number is 5A26-F9F6
 C:.
 |   README.md
-|   struktur3.1.txt
+|   struktur4.txt
 |   
 +---.vscode
 |       launch.json
+|       
++---data
+|       database.mv.db
 |       
 \---pbo
     |   .gitattributes
@@ -30,25 +33,29 @@ C:.
     |   |   |               |   PboApplication.java
     |   |   |               |   
     |   |   |               +---config
+    |   |   |               |       DataInitializer.java
     |   |   |               |       SecurityConfig.java
     |   |   |               |       
     |   |   |               +---model
     |   |   |               |       User.java
     |   |   |               |       
-    |   |   |               \---repository
-    |   |   |                       userRepository.java
+    |   |   |               +---repository
+    |   |   |               |       userRepository.java
+    |   |   |               |       
+    |   |   |               \---service
+    |   |   |                       CustomUserDetailsService.java
+    |   |   |                       UserService.java
     |   |   |                       
     |   |   \---resources
     |   |       |   application.properties
     |   |       |   
     |   |       +---static
-    |   |       |   +---CSS
-    |   |       |   \---javascript
-    |   |       |           login.js
+    |   |       |   \---CSS
+    |   |       |           style.css
     |   |       |           
     |   |       \---templates
     |   |           |   login.html
-    |   |           |   reset.html
+    |   |           |   signup.html
     |   |           |   
     |   |           +---admin
     |   |           |       home.html
@@ -80,21 +87,26 @@ C:.
         |   |           |   PboApplication.class
         |   |           |   
         |   |           +---config
+        |   |           |       DataInitializer.class
         |   |           |       SecurityConfig.class
         |   |           |       
         |   |           +---model
         |   |           |       User.class
         |   |           |       
-        |   |           \---repository
-        |   |                   userRepository.class
+        |   |           +---repository
+        |   |           |       userRepository.class
+        |   |           |       
+        |   |           \---service
+        |   |                   CustomUserDetailsService.class
+        |   |                   UserService.class
         |   |                   
         |   +---static
-        |   |   \---javascript
-        |   |           login.js
+        |   |   \---CSS
+        |   |           style.css
         |   |           
         |   \---templates
         |       |   login.html
-        |       |   reset.html
+        |       |   signup.html
         |       |   
         |       +---admin
         |       |       home.html

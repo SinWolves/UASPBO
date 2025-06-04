@@ -1,27 +1,29 @@
 package com.uas.pbo.config;
 
-import com.uas.pbo.model.User;
-import com.uas.pbo.repository.userRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.uas.pbo.service.CustomUserDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 @Configuration
+@EnableWebSecurity
 public class SecurityConfig {
-    
-    @Autowired
-    private userRepository userRepository;
+    private final CustomUserDetailsService userDetailsService;
+
+    public SecurityConfig(CustomUserDetailsService userDetailsService) {
+        this.userDetailsService = userDetailsService;
+    }
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
+            .userDetailsService(userDetailsService)
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/h2-console/**").permitAll()
-                .requestMatchers("/login", "/javascript/**", "/CSS/**").permitAll()
+                .requestMatchers("/", "/login", "/signup", "/css/**").permitAll()
                 .requestMatchers("/admin/**").hasRole("ADMIN")
                 .requestMatchers("/dosen/**").hasRole("DOSEN")
                 .requestMatchers("/mahasiswa/**").hasRole("MAHASISWA")
@@ -29,41 +31,19 @@ public class SecurityConfig {
             )
             .formLogin(form -> form
                 .loginPage("/login")
-                .loginProcessingUrl("/login")
-                .successHandler(roleBasedRedirectHandler())
-                .failureUrl("/login?error=true")
+                .defaultSuccessUrl("/redirect", true)
                 .permitAll()
             )
-            // ↓↓↓ ADD THESE LINES FOR H2 CONSOLE ↓↓↓
-            .csrf(csrf -> csrf
-                .ignoringRequestMatchers("/h2-console/**") // Disable CSRF for H2
-            )
-            .headers(headers -> headers
-                .frameOptions(frame -> frame.disable()) // Allow H2 frames
+            .logout(logout -> logout
+                .logoutSuccessUrl("/login")
+                .permitAll()
             );
         
         return http.build();
     }
 
     @Bean
-    public AuthenticationSuccessHandler roleBasedRedirectHandler() {
-        return (request, response, authentication) -> {
-            User user = userRepository.findByEmail(authentication.getName())
-                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
-            
-            switch (user.getRole().toUpperCase()) {
-                case "ADMIN":
-                    response.sendRedirect("/admin/home");
-                    break;
-                case "DOSEN":
-                    response.sendRedirect("/dosen/home");
-                    break;
-                case "MAHASISWA":
-                    response.sendRedirect("/mahasiswa/home");
-                    break;
-                default:
-                    throw new IllegalStateException("Invalid role");
-            }
-        };
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 }
