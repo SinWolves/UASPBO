@@ -1,13 +1,14 @@
 package com.uas.pbo;
 
-import com.uas.pbo.model.User;
-import com.uas.pbo.service.UserService;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import com.uas.pbo.model.User;
+import com.uas.pbo.service.UserService;
 
 @Controller
 public class loginController {
