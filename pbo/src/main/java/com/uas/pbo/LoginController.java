@@ -11,10 +11,10 @@ import com.uas.pbo.model.User;
 import com.uas.pbo.service.UserService;
 
 @Controller
-public class loginController {
+public class LoginController {
     private final UserService userService;
 
-    public loginController(UserService userService) {
+    public LoginController(UserService userService) {
         this.userService = userService;
     }
 
