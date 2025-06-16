@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Mahasiswa Home</title>
-    <link rel="stylesheet" href="/UASPBO/pbo/src/main/resources/static\CSS/dashboard.css">
+    <link rel="stylesheet" href="../CSS/dashboard.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -36,8 +36,10 @@
             </div>
             
             <!-- Menu Items -->
-            <li><a class="active" href="#home">Your Class</a></li>
-            <li><a href="Class_list.html">Class List</a></li>
+            <!-- Thymeleaf-aware routing -->
+            <li><a th:href="@{/home}" class="active">Your Class</a></li>
+            <li><a th:href="@{/class-list}">Class List</a></li>
+
         </ul>
 
 
