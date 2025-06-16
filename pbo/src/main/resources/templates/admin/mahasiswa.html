@@ -44,79 +44,50 @@
         
         <!-- Main Content -->
          <div class="main-content">
-            <h1> Your Class</h1>
+            <h1> Mahasiswa</h1>
             <div class="content-box">
-                <h1>Class You Took</h1>
+                <h1>List Mahasiswa</h1>
                 <div class="table-container">
-                    <table class="class-table">
-                        <thead>
-                            <tr>
-                                <th>No</th>
-                                <th>Course Code</th>
-                                <th>Course Name</th>
-                                <th>Credits</th>
-                                <th>Semester</th>
-                                <th>Classroom</th>
-                                <th>Lecturer</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>CS101</td>
-                                <td>Introduction to Programming</td>
-                                <td>3</td>
-                                <td>2023/1</td>
-                                <td>D-101</td>
-                                <td>Dr. Jos Timanta Tarigan, S.Kom., M.Sc.</td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>MATH201</td>
-                                <td>Calculus I</td>
-                                <td>4</td>
-                                <td>2023/1</td>
-                                <td>B+</td>
-                                <td>Completed</td>
-                            </tr>
-                            <tr>
-                                <td>3</td>
-                                <td>PHYS101</td>
-                                <td>General Physics</td>
-                                <td>3</td>
-                                <td>2023/2</td>
-                                <td>A-</td>
-                                <td>Completed</td>
-                            </tr>
-                            <tr>
-                                <td>4</td>
-                                <td>ENG101</td>
-                                <td>Academic Writing</td>
-                                <td>2</td>
-                                <td>2023/2</td>
-                                <td>B</td>
-                                <td>Completed</td>
-                            </tr>
-                            <tr>
-                                <td>5</td>
-                                <td>CS201</td>
-                                <td>Data Structures</td>
-                                <td>3</td>
-                                <td>2024/1</td>
-                                <td>IP</td>
-                                <td>In Progress</td>
-                            </tr>
-                            <tr>
-                                <td>6</td>
-                                <td>STAT101</td>
-                                <td>Probability & Statistics</td>
-                                <td>3</td>
-                                <td>2024/1</td>
-                                <td>IP</td>
-                                <td>In Progress</td>
-                            </tr>
-                        </tbody>
-                    </table>
+<div class="table-header">
+    <a href="/admin/add-mahasiswa" class="add-btn">+ Add Mahasiswa</a>
+</div>
+
+<table class="class-table">
+    <thead>
+        <tr>
+            <th>No</th>
+            <th>NIM</th>
+            <th>Nama</th>
+            <th>Mata Kuliah Diambil</th>
+            <th>Email</th>
+            <th>Aksi</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>1</td>
+            <td>230123456</td>
+            <td>Kevin Lubis</td>
+            <td>Introduction to Programming, Calculus I</td>
+            <td>kevin@example.com</td>
+            <td>
+                <a href="/admin/edit-mahasiswa/230123456" class="edit-btn">Edit</a>
+            </td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td>230654321</td>
+            <td>Maria Sitorus</td>
+            <td>General Physics, Academic Writing</td>
+            <td>maria@example.com</td>
+            <td>
+                <a href="/admin/edit-mahasiswa/230654321" class="edit-btn">Edit</a>
+            </td>
+        </tr>
+        <!-- Tambahkan baris lainnya sesuai kebutuhan -->
+    </tbody>
+</table>
+
 <!-- Pagination Controls -->
     <div class="pagination-controls">
         <div class="pagination-inner">
