@@ -201,3 +201,55 @@ body {
 .class-table td:last-child[data-status="In Progress"] {
     color: #FFA500;
 }
+
+.table-container {
+    position: relative;
+}
+
+.pagination-controls {
+    display: flex;
+    justify-content: flex-end; /* Kanan */
+    margin-top: 10px;
+}
+
+.pagination-inner {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.page-btn {
+    width: 28px;
+    height: 28px;
+    cursor: pointer;
+    user-select: none;
+}
+
+.page-btn.disabled {
+    opacity: 0.4;
+    pointer-events: none;
+}
+
+
+
+/* Tombol Apply */
+.apply-btn {
+    padding: 6px 14px;
+    background-color: #007bff;       /* sesuaikan warna tema */
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+}
+.apply-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Highlight baris terpilih */
+.class-table tbody tr.selected {
+    background-color: #3b9aff;      /* biru muda */
+}

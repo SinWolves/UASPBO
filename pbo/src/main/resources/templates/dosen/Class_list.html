@@ -36,18 +36,21 @@
             </div>
             
             <!-- Menu Items -->
-            <li><a class="active" href="#home">Your Class</a></li>
-            <li><a href="Class_list.html">Class List</a></li>
+            <li><a href="home.html">Your Class</a></li>
+            <li><a class="active">Class List</a></li>
         </ul>
 
-
-        
         <!-- Main Content -->
         <div class="main-content">
-            <h1> Your Class</h1>
+            <h1> Class List</h1>
             <div class="content-box">
-                <h1>Class You Lecture</h1>
+                <h1>All Class</h1>
                 <div class="table-container">
+                    <div class="table-container">
+                        <!-- Header tabel + Tombol di kanan -->
+                        <div class="table-header">
+                            <button id="applyBtn" class="apply-btn" disabled>Apply as Lecturer</button>
+                        </div>
                     <table class="class-table">
                         <thead>
                             <tr>
@@ -155,6 +158,8 @@
     const btnNext    = document.getElementById("btnNext");
     let currentPage  = 1;
     let rowsPerPage  = 3;
+    const applyBtn  = document.getElementById("applyBtn"); // ← tombol Apply
+    let   selectedRow = null;                              // ← baris terpilih
 
     function displayRows() {
         const start = (currentPage - 1) * rowsPerPage;
@@ -194,6 +199,40 @@
         }
     }
 
-    // Initial render
+    /* ---------- SELEKSI BARIS ---------- */
+    rows.forEach(row => {
+        row.addEventListener("click", () => {
+            // Kalau baris sama diklik lagi → batalkan seleksi
+            if (row === selectedRow) {
+                row.classList.remove("selected");
+                selectedRow = null;
+                applyBtn.disabled = true;
+                return;
+            }
+
+            // Hapus highlight di baris lama
+            if (selectedRow) selectedRow.classList.remove("selected");
+
+            // Tandai baris baru
+            selectedRow = row;
+            row.classList.add("selected");
+            applyBtn.disabled = false;
+        });
+    });
+
+    /* ---------- TOMBOL APPLY ---------- */
+    applyBtn.addEventListener("click", () => {
+        if (!selectedRow) return;  // fallback
+
+        // Contoh: ambil kolom Kode & Nama Mata Kuliah
+        const cells = selectedRow.querySelectorAll("td");
+        const code  = cells[1].textContent.trim();
+        const name  = cells[2].textContent.trim();
+
+        // TODO: kirim ke backend atau navigasi, sementara kita alert dulu
+        alert(`Applying for class:\n${code} – ${name}`);
+    });
+
     displayRows();
+
 </script>
