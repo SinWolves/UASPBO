@@ -8,14 +8,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import com.uas.pbo.model.User;
 
 @Controller
-public class MahasiswaController {
+public class DosenController {
 
 
-
-    @GetMapping("mahasiswa/Class_list")
+    @GetMapping("dosen/Class_list")
     public String classList(@AuthenticationPrincipal User user, Model model) {
         model.addAttribute("name", user.getName());
-        return "mahasiswa/Class_list"; 
+        return "dosen/Class_list"; 
     }
 
 
