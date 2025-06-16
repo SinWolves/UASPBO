@@ -10,19 +10,13 @@ import com.uas.pbo.model.User;
 
 @Controller
 public class AdminMainController {
-    @GetMapping("adminHome")
-    public String home(@AuthenticationPrincipal User user, Model model) {
-        model.addAttribute("name", user.getName());
-        return "admin/home"; 
-    }
-
-    @GetMapping("adminClass-list")
+    @GetMapping("/admin/Class-list")
     public String classList(@AuthenticationPrincipal User user, Model model) {
         model.addAttribute("name", user.getName());
         return "admin/Class_list"; 
     }
 
-    @GetMapping("adminMahasiswa")
+    @GetMapping("/admin/mahasiswa")
     public String mahasiswa(@AuthenticationPrincipal User user, Model model) {
         model.addAttribute("name", user.getName());
         return "admin/mahasiswa"; 
