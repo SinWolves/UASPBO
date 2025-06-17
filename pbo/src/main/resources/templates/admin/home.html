@@ -40,89 +40,84 @@
             <li><a th:href="@{/admin/Class-list}">Kelas</a></li>
         </ul>
 
-
-        
         <!-- Main Content -->
         <div class="main-content">
             <h1>Dosen</h1>
             <div class="content-box">
-                <h1>List Dosen</h1>
+                <h1>Approve Dosen</h1>
                 <div class="table-container">
-            <table class="class-table">
-                <thead>
-                    <tr>
-                        <th>NIP</th>
-                        <th>Nama</th>
-                        <th>Email</th>
-                        <th>Kelas Mengajar</th>
-                        <th>Aksi</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>198302142008041001</td>
-                        <td>Dr. Jos Timanta Tarigan, S.Kom., M.Sc.</td>
-                        <td>jos.tarigan@univ.ac.id</td>
-                        <td>CS101 - Introduction to Programming</td>
-                        <td>
-<form action="/admin/delete-dosen/198302142008041001" method="post">
+                    <table class="class-table">
+                        <thead>
+                            <tr>
+                                <th>NIP</th>
+                                <th>Nama</th>
+                                <th>Email</th>
+                                <th>Mata Kuliah</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>198302142008041001</td>
+                                <td>Dr. Jos Timanta Tarigan, S.Kom., M.Sc.</td>
+                                <td>jos.tarigan@univ.ac.id</td>
+                                <td>CS101 - Introduction to Programming</td>
+                                <td><button class="add-btn">Approve</button></td>
+                            </tr>
+                            <tr>
+                                <td>197801292009021003</td>
+                                <td>Dr. Maria Sinaga, M.Sc.</td>
+                                <td>maria.sinaga@univ.ac.id</td>
+                                <td>MATH201 - Calculus I</td>
+                                <td><button class="add-btn">Approve</button></td>
+                            </tr>
+                            <!-- Tambahkan baris lainnya sesuai data -->
+                        </tbody>
+                    </table>
 
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>197801292009021003</td>
-                        <td>Dr. Maria Sinaga, M.Sc.</td>
-                        <td>maria.sinaga@univ.ac.id</td>
-                        <td>MATH201 - Calculus I</td>
-                        <td>
-<form action="/admin/delete-dosen/198302142008041001" method="post">
-                        </td>
-                    </tr>
-                    <!-- Tambah baris lainnya sesuai data -->
-                </tbody>
-            </table>
-<!-- Pagination Controls -->
-    <div class="pagination-controls">
-        <div class="pagination-inner">
-            <label for="rowsPerPage">Rows per page:</label>
-            <select id="rowsPerPage" onchange="changeRowsPerPage()">
-                <option value="2">2</option>
-                <option value="3" selected>3</option>
-                <option value="5">5</option>
-                <option value="10">10</option>
-            </select>
+                    <!-- Pagination Controls -->
+                    <div class="pagination-controls">
+                        <div class="pagination-inner">
+                            <label for="rowsPerPage">Rows per page:</label>
+                            <select id="rowsPerPage" onchange="changeRowsPerPage()">
+                                <option value="2">2</option>
+                                <option value="3" selected>3</option>
+                                <option value="5">5</option>
+                                <option value="10">10</option>
+                            </select>
 
-            <img src="../../img&icon/Arrow right (1).png"
-                 id="btnPrev"
-                 alt="Previous page"
-                 class="page-btn"
-                 onclick="previousPage()">
-            <span id="pageInfo"></span>
-            <img src="../../img&icon/Arrow right.png"
-                 id="btnNext"
-                 alt="Next page"
-                 class="page-btn"
-                 onclick="nextPage()">
-        </div>
-    </div>
-
+                            <img src="../../img&icon/Arrow right (1).png"
+                                 id="btnPrev"
+                                 alt="Previous page"
+                                 class="page-btn"
+                                 onclick="previousPage()">
+                            <span id="pageInfo"></span>
+                            <img src="../../img&icon/Arrow right.png"
+                                 id="btnNext"
+                                 alt="Next page"
+                                 class="page-btn"
+                                 onclick="nextPage()">
+                        </div>
+                    </div>
 
                 </div>
             </div>
         </div>
     </div>
 </body>
+
+<!-- Pagination Script -->
 <script>
-    const tableBody = document.querySelector(".class-table tbody");
-    const rows       = Array.from(tableBody.querySelectorAll("tr"));
-    const btnPrev    = document.getElementById("btnPrev");
-    const btnNext    = document.getElementById("btnNext");
-    let currentPage  = 1;
-    let rowsPerPage  = 3;
+    const tableBody   = document.querySelector(".class-table tbody");
+    const rows        = Array.from(tableBody.querySelectorAll("tr"));
+    const btnPrev     = document.getElementById("btnPrev");
+    const btnNext     = document.getElementById("btnNext");
+    let currentPage   = 1;
+    let rowsPerPage   = 3;
 
     function displayRows() {
         const start = (currentPage - 1) * rowsPerPage;
-        const end   = start + rowsPerPage;
+        const end = start + rowsPerPage;
 
         rows.forEach((row, idx) => {
             row.style.display = (idx >= start && idx < end) ? "" : "none";
@@ -132,7 +127,6 @@
         document.getElementById("pageInfo").textContent =
             `Page ${currentPage} of ${totalPages}`;
 
-        // Toggle state tombol
         btnPrev.classList.toggle("disabled", currentPage === 1);
         btnNext.classList.toggle("disabled", currentPage === totalPages);
     }
@@ -158,9 +152,7 @@
         }
     }
 
-    // Initial render
-    displayRows();
+    displayRows(); // Initial Render
 </script>
 
-</body>
 </html>

@@ -19,7 +19,7 @@
             </button>
         </form>
     </ul>
-    
+
     <!-- Vertical Sidebar -->
     <div class="content-container">
         <ul class="sidebar">
@@ -41,133 +41,116 @@
         </ul>
 
 
-        
         <!-- Main Content -->
-         <div class="main-content">
-            <h1> Mahasiswa</h1>
+        <div class="main-content">
+            <h1>Mahasiswa</h1>
             <div class="content-box">
-                <h1>List Mahasiswa</h1>
+                <h1>Approve Mahasiswa</h1>
                 <div class="table-container">
-<div class="table-header">
-    <a href="/admin/add-mahasiswa" class="add-btn">+ Add Mahasiswa</a>
-</div>
+                    <table class="class-table">
+                        <thead>
+                            <tr>
+                                <th>NIM</th>
+                                <th>Nama</th>
+                                <th>Email</th>
+                                <th>Mata Kuliah</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>231401065</td>
+                                <td>Kebin.</td>
+                                <td>kbin@univ.ac.id</td>
+                                <td>CS101 - Introduction to Programming</td>
+                                <td><button class="add-btn">Approve</button></td>
+                            </tr>
+                            <tr>
+                                <td>231410012/td>
+                                <td>Maria Sinaga Jr</td>
+                                <td>maria.sinagaJr@univ.ac.id</td>
+                                <td>MATH201 - Calculus I</td>
+                                <td><button class="add-btn">Approve</button></td>
+                            </tr>
+                            <!-- Tambah baris lainnya sesuai data -->
+                        </tbody>
+                    </table>
 
-<table class="class-table">
-    <thead>
-        <tr>
-            <th>No</th>
-            <th>NIM</th>
-            <th>Nama</th>
-            <th>Mata Kuliah Diambil</th>
-            <th>Email</th>
-            <th>Aksi</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>1</td>
-            <td>230123456</td>
-            <td>Kevin Lubis</td>
-            <td>Introduction to Programming, Calculus I</td>
-            <td>kevin@example.com</td>
-            <td>
-                <a href="/admin/edit-mahasiswa/230123456" class="edit-btn">Edit</a>
-            </td>
-        </tr>
-        <tr>
-            <td>2</td>
-            <td>230654321</td>
-            <td>Maria Sitorus</td>
-            <td>General Physics, Academic Writing</td>
-            <td>maria@example.com</td>
-            <td>
-                <a href="/admin/edit-mahasiswa/230654321" class="edit-btn">Edit</a>
-            </td>
-        </tr>
-        <!-- Tambahkan baris lainnya sesuai kebutuhan -->
-    </tbody>
-</table>
+                    <!-- Pagination Controls -->
+                    <div class="pagination-controls">.
+                        <div class="pagination-inner">
+                            <label for="rowsPerPage">Rows per page:</label>
+                            <select id="rowsPerPage" onchange="changeRowsPerPage()">
+                                <option value="2">2</option>
+                                <option value="3" selected>3</option>
+                                <option value="5">5</option>
+                                <option value="10">10</option>
+                            </select>
 
-<!-- Pagination Controls -->
-    <div class="pagination-controls">
-        <div class="pagination-inner">
-            <label for="rowsPerPage">Rows per page:</label>
-            <select id="rowsPerPage" onchange="changeRowsPerPage()">
-                <option value="2">2</option>
-                <option value="3" selected>3</option>
-                <option value="5">5</option>
-                <option value="10">10</option>
-            </select>
-
-            <img src="../../img&icon/Arrow right (1).png"
-                 id="btnPrev"
-                 alt="Previous page"
-                 class="page-btn"
-                 onclick="previousPage()">
-            <span id="pageInfo"></span>
-            <img src="../../img&icon/Arrow right.png"
-                 id="btnNext"
-                 alt="Next page"
-                 class="page-btn"
-                 onclick="nextPage()">
-        </div>
-    </div>
-
-
+                            <img src="../../img&icon/Arrow right (1).png"
+                                 id="btnPrev"
+                                 alt="Previous page"
+                                 class="page-btn"
+                                 onclick="previousPage()">
+                            <span id="pageInfo"></span>
+                            <img src="../../img&icon/Arrow right.png"
+                                 id="btnNext"
+                                 alt="Next page"
+                                 class="page-btn"
+                                 onclick="nextPage()">
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</body>
-<script>
-    const tableBody = document.querySelector(".class-table tbody");
-    const rows       = Array.from(tableBody.querySelectorAll("tr"));
-    const btnPrev    = document.getElementById("btnPrev");
-    const btnNext    = document.getElementById("btnNext");
-    let currentPage  = 1;
-    let rowsPerPage  = 3;
 
-    function displayRows() {
-        const start = (currentPage - 1) * rowsPerPage;
-        const end   = start + rowsPerPage;
+    <script>
+        const tableBody = document.querySelector(".class-table tbody");
+        const rows = Array.from(tableBody.querySelectorAll("tr"));
+        const btnPrev = document.getElementById("btnPrev");
+        const btnNext = document.getElementById("btnNext");
+        let currentPage = 1;
+        let rowsPerPage = 3;
 
-        rows.forEach((row, idx) => {
-            row.style.display = (idx >= start && idx < end) ? "" : "none";
-        });
+        function displayRows() {
+            const start = (currentPage - 1) * rowsPerPage;
+            const end = start + rowsPerPage;
 
-        const totalPages = Math.ceil(rows.length / rowsPerPage);
-        document.getElementById("pageInfo").textContent =
-            `Page ${currentPage} of ${totalPages}`;
+            rows.forEach((row, idx) => {
+                row.style.display = (idx >= start && idx < end) ? "" : "none";
+            });
 
-        // Toggle state tombol
-        btnPrev.classList.toggle("disabled", currentPage === 1);
-        btnNext.classList.toggle("disabled", currentPage === totalPages);
-    }
+            const totalPages = Math.ceil(rows.length / rowsPerPage);
+            document.getElementById("pageInfo").textContent =
+                `Page ${currentPage} of ${totalPages}`;
 
-    function changeRowsPerPage() {
-        rowsPerPage = parseInt(document.getElementById("rowsPerPage").value, 10);
-        currentPage = 1;
+            btnPrev.classList.toggle("disabled", currentPage === 1);
+            btnNext.classList.toggle("disabled", currentPage === totalPages);
+        }
+
+        function changeRowsPerPage() {
+            rowsPerPage = parseInt(document.getElementById("rowsPerPage").value, 10);
+            currentPage = 1;
+            displayRows();
+        }
+
+        function previousPage() {
+            if (currentPage > 1) {
+                currentPage--;
+                displayRows();
+            }
+        }
+
+        function nextPage() {
+            const totalPages = Math.ceil(rows.length / rowsPerPage);
+            if (currentPage < totalPages) {
+                currentPage++;
+                displayRows();
+            }
+        }
+
         displayRows();
-    }
-
-    function previousPage() {
-        if (currentPage > 1) {
-            currentPage--;
-            displayRows();
-        }
-    }
-
-    function nextPage() {
-        const totalPages = Math.ceil(rows.length / rowsPerPage);
-        if (currentPage < totalPages) {
-            currentPage++;
-            displayRows();
-        }
-    }
-
-    // Initial render
-    displayRows();
-</script>
-
+    </script>
 </body>
 </html>
