@@ -1,6 +1,8 @@
 package com.uas.pbo.service;
 
+import com.uas.pbo.model.Dosen;
 import com.uas.pbo.model.User;
+import com.uas.pbo.repository.DosenRepository;
 import com.uas.pbo.repository.userRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -9,10 +11,12 @@ import org.springframework.stereotype.Service;
 public class UserService {
     private final userRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final DosenRepository dosenRepository;
 
-    public UserService(userRepository userRepository, PasswordEncoder passwordEncoder) {
+    public UserService(userRepository userRepository, PasswordEncoder passwordEncoder, DosenRepository dosenRepository) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.dosenRepository = dosenRepository;
     }
 
     public void registerUser(String identifier, String email, String name, String password, String role) {
@@ -31,5 +35,11 @@ public class UserService {
         user.setRole(role.toUpperCase());
         
         userRepository.save(user);
+
+        if ("DOSEN".equals(role.toUpperCase())) {
+            Dosen dosen = new Dosen();
+            dosen.setNip(identifier);
+            dosenRepository.save(dosen);
+        }
     }
 }
