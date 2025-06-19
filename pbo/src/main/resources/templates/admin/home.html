@@ -57,18 +57,11 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>198302142008041001</td>
-                                <td>Dr. Jos Timanta Tarigan, S.Kom., M.Sc.</td>
-                                <td>jos.tarigan@univ.ac.id</td>
-                                <td>CS101 - Introduction to Programming</td>
-                                <td><button class="add-btn">Approve</button></td>
-                            </tr>
-                            <tr>
-                                <td>197801292009021003</td>
-                                <td>Dr. Maria Sinaga, M.Sc.</td>
-                                <td>maria.sinaga@univ.ac.id</td>
-                                <td>MATH201 - Calculus I</td>
+                            <tr th:each="dosen : ${dosenList}">
+                                <td th:text="${dosen.nip}"></td>
+                                <td th:text="${dosen.user.name}"></td>
+                                <td th:text="${dosen.user.email}"></td>
+                                <td th:text="${dosen.mataKuliah}"></td>
                                 <td><button class="add-btn">Approve</button></td>
                             </tr>
                             <!-- Tambahkan baris lainnya sesuai data -->

@@ -52,12 +52,6 @@ public class LoginController {
         }
     }
 
-    @GetMapping("/admin/home")
-    public String adminHome(@AuthenticationPrincipal User user, Model model) {
-        model.addAttribute("name", user.getName());
-        return "admin/home";
-    }
-
     @GetMapping("/dosen/home")
     public String dosenHome(@AuthenticationPrincipal User user, Model model) {
         model.addAttribute("name", user.getName());
