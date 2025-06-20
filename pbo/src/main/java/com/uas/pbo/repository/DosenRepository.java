@@ -7,6 +7,6 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface DosenRepository extends JpaRepository<Dosen, String> {
+public interface DosenRepository extends JpaRepository<Dosen, Long> {
     List<Dosen> findByNipAndStatus(String nip, String status);
 }

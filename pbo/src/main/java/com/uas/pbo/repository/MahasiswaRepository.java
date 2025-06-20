@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface MahasiswaRepository extends JpaRepository<Mahasiswa, String> {
+public interface MahasiswaRepository extends JpaRepository<Mahasiswa, Long> {
 
     // Custom method to check if an enrollment already exists to prevent duplicates
     boolean existsByNimAndCourseCode(String nim, String courseCode);

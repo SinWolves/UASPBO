@@ -33,12 +33,15 @@ public class AdminMainController {
     private DosenRepository dosenRepository;
     private MahasiswaRepository mahasiswaRepository;
     private final ClassListService classListService;
+    private  ClassListRepository classListRepository;
 
     //Dosen
-    public AdminMainController(DosenRepository dosenRepository, ClassListService classListService, MahasiswaRepository mahasiswaRepository) {
+    public AdminMainController(DosenRepository dosenRepository, ClassListService classListService, MahasiswaRepository mahasiswaRepository
+                                , ClassListRepository classListRepository) {
         this.mahasiswaRepository = mahasiswaRepository;
         this.classListService = classListService;
         this.dosenRepository = dosenRepository;
+        this.classListRepository = classListRepository;
     }
 
     // Tabel Dosen
@@ -53,7 +56,7 @@ public class AdminMainController {
     // Tabel Matkuliah
     @GetMapping("/admin/Class-list")
     public String classList(@AuthenticationPrincipal User user, Model model) {
-        List<ClassList> classLists = classListService.getAllClasses(); // Call the service
+        List<ClassList> classLists = classListService.getAllClasses();
         model.addAttribute("name", user.getName());
         model.addAttribute("classLists", classLists);
         return "admin/Class_list"; 
@@ -100,23 +103,33 @@ public class AdminMainController {
 
 
     @PostMapping("/admin/approve")
-    public String approveDosen(@RequestParam String nip,
-                                @RequestParam String mataKuliah,
+    public String approveDosen(@RequestParam Long nip,
+                                @RequestParam String coursecode,
                                 @RequestParam String role,
                                 @RequestParam String action) {
+                                    
         Optional<Dosen> optionalDosen = dosenRepository.findById(nip);
         Optional<Mahasiswa> optionalMahasiswa = mahasiswaRepository.findById(nip);
+        Optional<ClassList> classLists = classListRepository.findByCourseCode(coursecode);
 
         String status = action.equals("approve") ? "APPROVED" : "DECLINED";
 
         if (role.equals("DOSEN")){
-            if (optionalDosen.isPresent()) {
+            if (optionalDosen.isPresent() && classLists.isPresent()) {
                 Dosen dosen = optionalDosen.get();
+                ClassList classList = classLists.get();
                 
                 // optional check for matching mata kuliah
-                if (dosen.getCourseCode().equals(mataKuliah)) {
+                if (dosen.getCourseCode().equals(coursecode)) {
                     dosen.setStatus(status);
+
+                    if (status.equals("APPROVED")) {
+                        classList.setLecturer(dosen.getUser().getName());
+                    }
+
+                    classListRepository.save(classList);
                     dosenRepository.save(dosen);
+
                     return "redirect:/admin/home"; 
                 }
             }
@@ -126,7 +139,7 @@ public class AdminMainController {
                 Mahasiswa mahasiswa = optionalMahasiswa.get();
                 
                 // optional check for matching mata kuliah
-                if (mahasiswa.getCourseCode().equals(mataKuliah)) {
+                if (mahasiswa.getCourseCode().equals(coursecode)) {
                     mahasiswa.setStatus(status);
                     mahasiswaRepository.save(mahasiswa);
                     return "redirect:/admin/mahasiswa"; 

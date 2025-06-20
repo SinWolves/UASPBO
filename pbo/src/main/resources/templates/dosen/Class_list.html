@@ -64,59 +64,14 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>CS101</td>
-                                <td>Introduction to Programming</td>
-                                <td>3</td>
-                                <td>2023/1</td>
-                                <td>D-101</td>
-                                <td>Dr. Jos Timanta Tarigan, S.Kom., M.Sc.</td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>MATH201</td>
-                                <td>Calculus I</td>
-                                <td>4</td>
-                                <td>2023/1</td>
-                                <td>B+</td>
-                                <td>Completed</td>
-                            </tr>
-                            <tr>
-                                <td>3</td>
-                                <td>PHYS101</td>
-                                <td>General Physics</td>
-                                <td>3</td>
-                                <td>2023/2</td>
-                                <td>A-</td>
-                                <td>Completed</td>
-                            </tr>
-                            <tr>
-                                <td>4</td>
-                                <td>ENG101</td>
-                                <td>Academic Writing</td>
-                                <td>2</td>
-                                <td>2023/2</td>
-                                <td>B</td>
-                                <td>Completed</td>
-                            </tr>
-                            <tr>
-                                <td>5</td>
-                                <td>CS201</td>
-                                <td>Data Structures</td>
-                                <td>3</td>
-                                <td>2024/1</td>
-                                <td>IP</td>
-                                <td>In Progress</td>
-                            </tr>
-                            <tr>
-                                <td>6</td>
-                                <td>STAT101</td>
-                                <td>Probability & Statistics</td>
-                                <td>3</td>
-                                <td>2024/1</td>
-                                <td>IP</td>
-                                <td>In Progress</td>
+                            <tr th:each="matkul, iterStat : ${classLists}">
+                                <td th:text="${iterStat.index + 1}"></td>
+                                <td th:text="${matkul.courseCode}"></td>
+                                <td th:text="${matkul.courseName}"></td>
+                                <td th:text="${matkul.credits}"></td>
+                                <td th:text="${matkul.semester}"></td>
+                                <td th:text="${matkul.classroom}"></td>
+                                <td th:text="${matkul.lecturer}"></td>
                             </tr>
                         </tbody>
                     </table>

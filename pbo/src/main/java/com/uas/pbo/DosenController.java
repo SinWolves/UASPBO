@@ -10,15 +10,19 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import com.uas.pbo.model.User;
 import com.uas.pbo.model.Dosen;
+import com.uas.pbo.model.ClassList;
 import com.uas.pbo.repository.DosenRepository;
+import com.uas.pbo.repository.ClassListRepository;
 
 
 @Controller
 public class DosenController {
 
     private DosenRepository dosenRepository;
+    private ClassListRepository classListRepository;
 
-    public DosenController(DosenRepository dosenRepository) {
+    public DosenController(DosenRepository dosenRepository, ClassListRepository classListRepository) {
+        this.classListRepository = classListRepository;
         this.dosenRepository = dosenRepository;
     }
 
@@ -33,7 +37,9 @@ public class DosenController {
 
     @GetMapping("dosen/Class_list")
     public String classList(@AuthenticationPrincipal User user, Model model) {
+        List<ClassList> classLists = classListRepository.findAll();
         model.addAttribute("name", user.getName());
+        model.addAttribute("classLists", classLists);
         return "dosen/Class_list"; 
     }
 
