@@ -58,19 +58,22 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>231401065</td>
-                                <td>Kebin.</td>
-                                <td>kbin@univ.ac.id</td>
-                                <td>CS101 - Introduction to Programming</td>
-                                <td><button class="add-btn">Approve</button></td>
-                            </tr>
-                            <tr>
-                                <td>231410012/td>
-                                <td>Maria Sinaga Jr</td>
-                                <td>maria.sinagaJr@univ.ac.id</td>
-                                <td>MATH201 - Calculus I</td>
-                                <td><button class="add-btn">Approve</button></td>
+                            <tr th:each="masis : ${mahasiswaList}">
+                                <td th:text="${masis.nim}"></td>
+                                <td th:text="${masis.user.name}"></td>
+                                <td th:text="${masis.user.email}"></td>
+                                <td th:text="${masis.classList.courseName}"></td>
+                                <td>
+                                    <form th:if="${masis.status == 'PENDING'}" th:action="@{/admin/approve}" method="post" style="display:inline;">
+                                        <input type="hidden" name="nip" th:value="${masis.id}">
+                                        <input type="hidden" name="mataKuliah" th:value="${masis.courseCode}">
+                                        <input type="hidden" name="role" th:value="${masis.user.role}">
+                                        <button type="submit" class="add-btn" name="action" value="approve">Approve</button>
+                                        <button type="submit" class="add-btn" name="action" style="background-color: red;" value="decline">Decline</button>
+                                    </form>
+                                    <span th:if="${masis.status == 'APPROVED'}" class="approved-text" style="color: green; font-weight: bold;">Approved</span>
+                                    <span th:if="${masis.status == 'DECLINED'}" class="approved-text" style="color: red; font-weight: bold;">Declined</span>
+                                </td>
                             </tr>
                             <!-- Tambah baris lainnya sesuai data -->
                         </tbody>

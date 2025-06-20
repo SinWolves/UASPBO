@@ -66,6 +66,7 @@
                                     <form th:if="${dosen.status == 'PENDING'}" th:action="@{/admin/approve}" method="post" style="display:inline;">
                                         <input type="hidden" name="nip" th:value="${dosen.nip}">
                                         <input type="hidden" name="mataKuliah" th:value="${dosen.mataKuliah}">
+                                        <input type="hidden" name="role" th:value="${dosen.role}">
                                         <button type="submit" class="add-btn" name="action" value="approve">Approve</button>
                                         <button type="submit" class="add-btn" name="action" style="background-color: red;" value="decline">Decline</button>
                                     </form>
