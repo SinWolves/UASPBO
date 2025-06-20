@@ -1,13 +1,11 @@
 package com.uas.pbo;
 
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.Authentication; // Use Authentication for more robust role checking
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.uas.pbo.model.User;
 import com.uas.pbo.service.UserService;
 
 @Controller
@@ -30,37 +28,30 @@ public class LoginController {
 
     @PostMapping("/signup")
     public String registerUser(@RequestParam String identifier,
-                              @RequestParam String email,
-                              @RequestParam String name,
-                              @RequestParam String password,
-                              @RequestParam String role) {
+                             @RequestParam String email,
+                             @RequestParam String name,
+                             @RequestParam String password,
+                             @RequestParam String role) {
         userService.registerUser(identifier, email, name, password, role);
         return "redirect:/login";
     }
 
+    // This is the only role-based logic that should be in this controller.
     @GetMapping("/redirect")
-    public String redirect(@AuthenticationPrincipal User user) {
-        switch (user.getRole()) {
-            case "ADMIN":
-                return "redirect:/admin/home";
-            case "DOSEN":
-                return "redirect:/dosen/home";
-            case "MAHASISWA":
-                return "redirect:/mahasiswa/home";
-            default:
-                return "redirect:/login";
+    public String redirect(Authentication authentication) { // Switched to Authentication object
+        if (authentication.getAuthorities().stream()
+                .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"))) {
+            return "redirect:/admin/home";
+        } else if (authentication.getAuthorities().stream()
+                .anyMatch(a -> a.getAuthority().equals("ROLE_DOSEN"))) {
+            return "redirect:/dosen/home";
+        } else if (authentication.getAuthorities().stream()
+                .anyMatch(a -> a.getAuthority().equals("ROLE_MAHASISWA"))) {
+            return "redirect:/mahasiswa/home";
+        } else {
+            return "redirect:/login";
         }
     }
 
-    @GetMapping("/dosen/home")
-    public String dosenHome(@AuthenticationPrincipal User user, Model model) {
-        model.addAttribute("name", user.getName());
-        return "dosen/home";
-    }
-
-    @GetMapping("/mahasiswa/home")
-    public String mahasiswaHome(@AuthenticationPrincipal User user, Model model) {
-        model.addAttribute("name", user.getName());
-        return "mahasiswa/home";
-    }
+    // The methods for mahasiswaHome and dosenHome have been removed.
 }

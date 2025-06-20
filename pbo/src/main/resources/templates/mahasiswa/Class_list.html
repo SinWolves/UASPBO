@@ -1,4 +1,3 @@
-<!-- incomplete, wrong table column and missing table button -->
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -13,6 +12,9 @@
     <!-- Horizontal Top Navbar -->
     <ul class="navbar">
         <li><a>Studious</a></li>
+        <p th:if="${classLists != null}" th:text="'Jumlah kelas: ' + ${#lists.size(classLists)}"></p>
+        <p th:unless="${classLists != null}">Data tidak tersedia</p>
+
         <form th:action="@{/logout}" method="post">
             <button type="submit" class="btn-login">
                 <img src="../../img&icon/Logout_icn.png" alt="Icon">
@@ -21,36 +23,34 @@
         </form>
     </ul>
     
-    <!-- Vertical Sidebar -->
+    <!-- Sidebar and Main Content Container -->
     <div class="content-container">
+        <!-- Sidebar -->
         <ul class="sidebar">
-            <!-- Logo -->
             <div class="sidebar-logo">
-                <img src="../../img&icon/Sidebar_logo.png" alt="Icon">
+                <img src="../../img&icon/Sidebar_logo.png" alt="Logo">
             </div>
-            
-            <!-- User Profile Section -->
             <div class="user-profile">
                 <div class="user-name" th:text="${name}">(Full Name)</div>
                 <div class="user-status">Mahasiswa</div>
             </div>
-            
-            <!-- Menu Items -->
-            <li><a th:href="@{/mahasiswa/home}" >Your Class</a></li>
-            <li><a th:href="@{/mahasiswa/Class_list}"class="active">Class List</a></li>
+            <li><a th:href="@{/mahasiswa/home}">Your Class</a></li>
+            <li><a th:href="@{/mahasiswa/Class_list}" class="active">Class List</a></li>
         </ul>
 
         <!-- Main Content -->
         <div class="main-content">
-            <h1> Class List</h1>
+            <h1>Class List</h1>
             <div class="content-box">
                 <h1>All Class</h1>
+
+                <!-- Apply Button -->
+                <div class="table-header">
+                    <button id="applyBtn" class="apply-btn" disabled>Apply Class</button>
+                </div>
+
+                <!-- Table -->
                 <div class="table-container">
-                    <div class="table-container">
-                        <!-- Header tabel + Tombol di kanan -->
-                        <div class="table-header">
-                            <button id="applyBtn" class="apply-btn" disabled>Apply Class</button>
-                        </div>
                     <table class="class-table">
                         <thead>
                             <tr>
@@ -63,169 +63,113 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>CS101</td>
-                                <td>Introduction to Programming</td>
-                                <td>3</td>
-                                <td>2023/1</td>
-                                <td>D-101</td>
-                                <td>Dr. Jos Timanta Tarigan, S.Kom., M.Sc.</td>
-                            </tr>
-                            <tr>
-                                <td>MATH201</td>
-                                <td>Calculus I</td>
-                                <td>4</td>
-                                <td>2023/1</td>
-                                <td>B+</td>
-                                <td>Completed</td>
-                            </tr>
-                            <tr>
-                                <td>PHYS101</td>
-                                <td>General Physics</td>
-                                <td>3</td>
-                                <td>2023/2</td>
-                                <td>A-</td>
-                                <td>Completed</td>
-                            </tr>
-                            <tr>
-                                <td>ENG101</td>
-                                <td>Academic Writing</td>
-                                <td>2</td>
-                                <td>2023/2</td>
-                                <td>B</td>
-                                <td>Completed</td>
-                            </tr>
-                            <tr>
-                                <td>CS201</td>
-                                <td>Data Structures</td>
-                                <td>3</td>
-                                <td>2024/1</td>
-                                <td>IP</td>
-                                <td>In Progress</td>
-                            </tr>
-                            <tr>
-                                <td>STAT101</td>
-                                <td>Probability & Statistics</td>
-                                <td>3</td>
-                                <td>2024/1</td>
-                                <td>IP</td>
-                                <td>In Progress</td>
+                            <tr th:each="classItem : ${classLists}">
+                                <td th:text="${classItem.courseCode}">CS101</td>
+                                <td th:text="${classItem.courseName}">Intro to Programming</td>
+                                <td th:text="${classItem.credits}">3</td>
+                                <td th:text="${classItem.semester}">2023/1</td>
+                                <td th:text="${classItem.classroom}">D-101</td>
+                                <td th:text="${classItem.lecturer}">Dr. Jos Timanta Tarigan</td>
                             </tr>
                         </tbody>
                     </table>
-<!-- Pagination Controls -->
-    <div class="pagination-controls">
-        <div class="pagination-inner">
-            <label for="rowsPerPage">Rows per page:</label>
-            <select id="rowsPerPage" onchange="changeRowsPerPage()">
-                <option value="2">2</option>
-                <option value="3" selected>3</option>
-                <option value="5">5</option>
-                <option value="10">10</option>
-            </select>
+                </div>
 
-            <img src="../../img&icon/Arrow right (1).png"
-                 id="btnPrev"
-                 alt="Previous page"
-                 class="page-btn"
-                 onclick="previousPage()">
-            <span id="pageInfo"></span>
-            <img src="../../img&icon/Arrow right.png"
-                 id="btnNext"
-                 alt="Next page"
-                 class="page-btn"
-                 onclick="nextPage()">
-        </div>
-    </div>
+                <!-- Pagination Controls -->
+                <div class="pagination-controls">
+                    <div class="pagination-inner">
+                        <label for="rowsPerPage">Rows per page:</label>
+                        <select id="rowsPerPage" onchange="changeRowsPerPage()">
+                            <option value="2">2</option>
+                            <option value="3" selected>3</option>
+                            <option value="5">5</option>
+                            <option value="10">10</option>
+                        </select>
 
-
+                        <img src="../../img&icon/Arrow right (1).png" id="btnPrev" alt="Previous page" class="page-btn" onclick="previousPage()">
+                        <span id="pageInfo"></span>
+                        <img src="../../img&icon/Arrow right.png" id="btnNext" alt="Next page" class="page-btn" onclick="nextPage()">
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</body>
-<script>
-    const tableBody = document.querySelector(".class-table tbody");
-    const rows       = Array.from(tableBody.querySelectorAll("tr"));
-    const btnPrev    = document.getElementById("btnPrev");
-    const btnNext    = document.getElementById("btnNext");
-    let currentPage  = 1;
-    let rowsPerPage  = 3;
-    const applyBtn  = document.getElementById("applyBtn"); // ← tombol Apply
-    let   selectedRow = null;                              // ← baris terpilih
 
-    function displayRows() {
-        const start = (currentPage - 1) * rowsPerPage;
-        const end   = start + rowsPerPage;
+    <!-- Script Section -->
+    <script>
+        const tableBody = document.querySelector(".class-table tbody");
+        const rows = Array.from(tableBody.querySelectorAll("tr"));
+        const btnPrev = document.getElementById("btnPrev");
+        const btnNext = document.getElementById("btnNext");
+        let currentPage = 1;
+        let rowsPerPage = 3;
+        const applyBtn = document.getElementById("applyBtn");
+        let selectedRow = null;
 
-        rows.forEach((row, idx) => {
-            row.style.display = (idx >= start && idx < end) ? "" : "none";
-        });
+        function displayRows() {
+            const start = (currentPage - 1) * rowsPerPage;
+            const end = start + rowsPerPage;
 
-        const totalPages = Math.ceil(rows.length / rowsPerPage);
-        document.getElementById("pageInfo").textContent =
-            `Page ${currentPage} of ${totalPages}`;
+            rows.forEach((row, idx) => {
+                row.style.display = (idx >= start && idx < end) ? "" : "none";
+            });
 
-        // Toggle state tombol
-        btnPrev.classList.toggle("disabled", currentPage === 1);
-        btnNext.classList.toggle("disabled", currentPage === totalPages);
-    }
+            const totalPages = Math.ceil(rows.length / rowsPerPage);
+            document.getElementById("pageInfo").textContent = `Page ${currentPage} of ${totalPages}`;
 
-    function changeRowsPerPage() {
-        rowsPerPage = parseInt(document.getElementById("rowsPerPage").value, 10);
-        currentPage = 1;
-        displayRows();
-    }
+            btnPrev.classList.toggle("disabled", currentPage === 1);
+            btnNext.classList.toggle("disabled", currentPage === totalPages);
+        }
 
-    function previousPage() {
-        if (currentPage > 1) {
-            currentPage--;
+        function changeRowsPerPage() {
+            rowsPerPage = parseInt(document.getElementById("rowsPerPage").value, 10);
+            currentPage = 1;
             displayRows();
         }
-    }
 
-    function nextPage() {
-        const totalPages = Math.ceil(rows.length / rowsPerPage);
-        if (currentPage < totalPages) {
-            currentPage++;
-            displayRows();
-        }
-    }
-
-    /* ---------- SELEKSI BARIS ---------- */
-    rows.forEach(row => {
-        row.addEventListener("click", () => {
-            // Kalau baris sama diklik lagi → batalkan seleksi
-            if (row === selectedRow) {
-                row.classList.remove("selected");
-                selectedRow = null;
-                applyBtn.disabled = true;
-                return;
+        function previousPage() {
+            if (currentPage > 1) {
+                currentPage--;
+                displayRows();
             }
+        }
 
-            // Hapus highlight di baris lama
-            if (selectedRow) selectedRow.classList.remove("selected");
+        function nextPage() {
+            const totalPages = Math.ceil(rows.length / rowsPerPage);
+            if (currentPage < totalPages) {
+                currentPage++;
+                displayRows();
+            }
+        }
 
-            // Tandai baris baru
-            selectedRow = row;
-            row.classList.add("selected");
-            applyBtn.disabled = false;
+        rows.forEach(row => {
+            row.addEventListener("click", () => {
+                if (row === selectedRow) {
+                    row.classList.remove("selected");
+                    selectedRow = null;
+                    applyBtn.disabled = true;
+                    return;
+                }
+
+                if (selectedRow) selectedRow.classList.remove("selected");
+
+                selectedRow = row;
+                row.classList.add("selected");
+                applyBtn.disabled = false;
+            });
         });
-    });
 
-    /* ---------- TOMBOL APPLY ---------- */
-    applyBtn.addEventListener("click", () => {
-        if (!selectedRow) return;  // fallback
+        applyBtn.addEventListener("click", () => {
+            if (!selectedRow) return;
 
-        // Contoh: ambil kolom Kode & Nama Mata Kuliah
-        const cells = selectedRow.querySelectorAll("td");
-        const code  = cells[1].textContent.trim();
-        const name  = cells[2].textContent.trim();
+            const cells = selectedRow.querySelectorAll("td");
+            const code = cells[0].textContent.trim(); // Fixed: use index 0 for course code
+            const name = cells[1].textContent.trim(); // Fixed: use index 1 for course name
 
-        // TODO: kirim ke backend atau navigasi, sementara kita alert dulu
-        alert(`Applying for class:\n${code} – ${name}`);
-    });
+            alert(`Applying for class:\n${code} – ${name}`);
+        });
 
-    displayRows();
-
-</script>
+        displayRows();
+    </script>
+</body>
+</html>
