@@ -48,11 +48,19 @@ public class MahasiswaController {
 
     // You can have other methods for the Mahasiswa role here...
     // For example, a home page controller
-    @GetMapping("mahasiswa/home")
+    // MODIFY THIS METHOD
+    @GetMapping("/mahasiswa/home")
     public String mahasiswaHome(@AuthenticationPrincipal User user, Model model) {
+        // This part is still correct
         model.addAttribute("name", user.getName());
-        // ... add any data needed for the home page
-        return "mahasiswa/home"; // assuming you have a home.html
+
+        // Call the service to get the list of approved enrollments
+        List<Mahasiswa> approvedEnrollments = mahasiswaService.getApprovedClassesForStudent(user.getIdentifier());
+
+        // Add the list to the model so the HTML can use it
+        model.addAttribute("enrollments", approvedEnrollments);
+
+        return "mahasiswa/home";
     }
 
     // MODIFIED: This method is now much simpler.

@@ -6,6 +6,8 @@ import com.uas.pbo.repository.MahasiswaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class MahasiswaService {
 
@@ -35,4 +37,16 @@ public class MahasiswaService {
         // 3. Save the new record to the database.
         mahasiswaRepository.save(newEnrollment);
     }
+
+    
+    // ADD THIS NEW METHOD:
+    /**
+     * Finds all approved class enrollments for a given student.
+     * @param nim The student's NIM.
+     * @return A list of Mahasiswa objects with "APPROVED" status.
+     */
+    public List<Mahasiswa> getApprovedClassesForStudent(String nim) {
+        return mahasiswaRepository.findByNimAndStatus(nim, "APPROVED");
+    }
+
 }

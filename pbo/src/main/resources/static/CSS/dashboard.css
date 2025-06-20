@@ -338,3 +338,25 @@ body {
 .submit-btn:hover {
     background-color: #0056b3;
 }
+
+        /* Simple style for the status badge */
+        .status-badge {
+            padding: 5px 10px;
+            border-radius: 12px;
+            color: white;
+            font-weight: 500;
+        }
+        .status-approved { background-color: #28a745; } /* Green */
+        .status-pending { background-color: #ffc107; color: black; } /* Yellow */
+        .status-rejected { background-color: #dc3545; } /* Red */
+
+        /* Style for the cancel button */
+        .btn-cancel {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .btn-cancel:hover { background-color: #c82333; }
