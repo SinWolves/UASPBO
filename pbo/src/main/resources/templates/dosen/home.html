@@ -60,53 +60,13 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>CS101</td>
-                                <td>Introduction to Programming</td>
-                                <td>3</td>
-                                <td>2023/1</td>
-                                <td>D-101</td>
-                                <td>Dr. Jos Timanta Tarigan, S.Kom., M.Sc.</td>
-                            </tr>
-                            <tr>
-                                <td>MATH201</td>
-                                <td>Calculus I</td>
-                                <td>4</td>
-                                <td>2023/1</td>
-                                <td>B+</td>
-                                <td>Completed</td>
-                            </tr>
-                            <tr>
-                                <td>PHYS101</td>
-                                <td>General Physics</td>
-                                <td>3</td>
-                                <td>2023/2</td>
-                                <td>A-</td>
-                                <td>Completed</td>
-                            </tr>
-                            <tr>
-                                <td>ENG101</td>
-                                <td>Academic Writing</td>
-                                <td>2</td>
-                                <td>2023/2</td>
-                                <td>B</td>
-                                <td>Completed</td>
-                            </tr>
-                            <tr>
-                                <td>CS201</td>
-                                <td>Data Structures</td>
-                                <td>3</td>
-                                <td>2024/1</td>
-                                <td>IP</td>
-                                <td>In Progress</td>
-                            </tr>
-                            <tr>
-                                <td>STAT101</td>
-                                <td>Probability & Statistics</td>
-                                <td>3</td>
-                                <td>2024/1</td>
-                                <td>IP</td>
-                                <td>In Progress</td>
+                            <tr th:each="class : ${classs}">
+                                    <td th:text="${class.courseCode}"></td>
+                                    <td th:text="${class.classList.courseName}"></td>
+                                    <td th:text="${class.classList.credits}"></td>
+                                    <td th:text="${class.classList.semester}"></td>
+                                    <td th:text="${class.classList.classroom}"></td>
+                                    <td th:text="${class.user.name}"></td>
                             </tr>
                         </tbody>
                     </table>
@@ -162,8 +122,8 @@
             `Page ${currentPage} of ${totalPages}`;
 
         // Toggle state tombol
-        btnPrev.classList.toggle("disabled", currentPage === 1);
-        btnNext.classList.toggle("disabled", currentPage === totalPages);
+        btnPrev.class.toggle("disabled", currentPage === 1);
+        btnNext.class.toggle("disabled", currentPage === totalPages);
     }
 
     function changeRowsPerPage() {

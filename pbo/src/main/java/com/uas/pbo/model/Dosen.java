@@ -7,6 +7,9 @@ import jakarta.persistence.*;
 public class Dosen {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    
     @Column(name = "nip")
     private String nip;
 
