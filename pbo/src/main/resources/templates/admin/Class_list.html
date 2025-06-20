@@ -52,7 +52,7 @@
                     <table class="class-table">
                         <thead>
                             <tr>
-                                <th>Class Code</th>
+                                <th>Course Code</th>
                                 <th>Course Name</th>
                                 <th>Credits</th>
                                 <th>Semester</th>
@@ -62,13 +62,13 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>CS101</td>
-                                <td>Introduction to Programming</td>
-                                <td>3</td>
-                                <td>1</td>
-                                <td>D-101</td>
-                                <td>Dr. Jos Timanta Tarigan</td>
+                            <tr th:each="matkul : ${mataKuliahList}">
+                                <td th:text="${matkul.courseCode}"></td>
+                                <td th:text="${matkul.courseName}"></td>
+                                <td th:text="${matkul.credits}"></td>
+                                <td th:text="${matkul.semester}"></td>
+                                <td th:text="${matkul.classroom}"></td>
+                                <td> BELUM DISET </td>
                                 <td>
                                     <a href="/admin/edit-class/CS101" class="edit-btn">Edit</a>
                                     <form action="/admin/delete-class/CS101" method="post" style="display:inline;" onsubmit="return confirm('Yakin ingin menghapus kelas ini?');">

@@ -16,17 +16,26 @@ import java.util.List;
 
 import com.uas.pbo.model.Dosen;
 import com.uas.pbo.model.User;
+import com.uas.pbo.model.ClassList;
 import com.uas.pbo.repository.DosenRepository;
+import com.uas.pbo.repository.MahasiswaRepository;
+import com.uas.pbo.repository.ClassListRepository;
 
 @Controller
 public class AdminMainController {
 
-    private final DosenRepository dosenRepository;
+    private DosenRepository dosenRepository;
+    private MahasiswaRepository mahasiswaRepository;
+    private ClassListRepository classListRepository;
 
-    public AdminMainController(DosenRepository dosenRepository) {
+    //Dosen
+    public AdminMainController(DosenRepository dosenRepository, ClassListRepository classListRepository, MahasiswaRepository mahasiswaRepository) {
+        this.mahasiswaRepository = mahasiswaRepository;
+        this.classListRepository = classListRepository;
         this.dosenRepository = dosenRepository;
     }
 
+    // Tabel Dosen
     @GetMapping("/admin/home")
     public String adminHome(@AuthenticationPrincipal User user, Model model) {
         List<Dosen> dosenList = dosenRepository.findAll();
@@ -35,9 +44,12 @@ public class AdminMainController {
         return "admin/home";
     }
 
+    // Tabel Matkuliah
     @GetMapping("/admin/Class-list")
     public String classList(@AuthenticationPrincipal User user, Model model) {
+        List<ClassList> classLists = classListRepository.findAll();
         model.addAttribute("name", user.getName());
+        model.addAttribute("classLists", classLists);
         return "admin/Class_list"; 
     }
 
@@ -50,15 +62,18 @@ public class AdminMainController {
 
     @PostMapping("/admin/approve")
     public String approveDosen(@RequestParam String nip,
-                                        @RequestParam String mataKuliah) {
+                                @RequestParam String mataKuliah,
+                                @RequestParam String action) {
         Optional<Dosen> optionalDosen = dosenRepository.findById(nip);
+
+        String status = action.equals("approve") ? "APPROVED" : "DECLINED";
 
         if (optionalDosen.isPresent()) {
             Dosen dosen = optionalDosen.get();
             
             // optional check for matching mata kuliah
             if (dosen.getMataKuliah().equals(mataKuliah)) {
-                dosen.setStatus("APPROVED");
+                dosen.setStatus(status);
                 dosenRepository.save(dosen);
                 return "redirect:/admin/home"; 
             }

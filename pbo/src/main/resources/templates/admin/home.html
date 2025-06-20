@@ -63,12 +63,14 @@
                                 <td th:text="${dosen.user.email}"></td>
                                 <td th:text="${dosen.mataKuliah}"></td>
                                 <td>
-                                    <form th:if="${dosen.status != 'APPROVED'}" th:action="@{/admin/approve}" method="post" style="display:inline;">
+                                    <form th:if="${dosen.status == 'PENDING'}" th:action="@{/admin/approve}" method="post" style="display:inline;">
                                         <input type="hidden" name="nip" th:value="${dosen.nip}">
                                         <input type="hidden" name="mataKuliah" th:value="${dosen.mataKuliah}">
-                                        <button type="submit" class="add-btn">Approve</button>
+                                        <button type="submit" class="add-btn" name="action" value="approve">Approve</button>
+                                        <button type="submit" class="add-btn" name="action" style="background-color: red;" value="decline">Decline</button>
                                     </form>
                                     <span th:if="${dosen.status == 'APPROVED'}" class="approved-text" style="color: green; font-weight: bold;">Approved</span>
+                                    <span th:if="${dosen.status == 'DECLINED'}" class="approved-text" style="color: red; font-weight: bold;">Declined</span>
                                 </td>
                             </tr>
                             <!-- Tambahkan baris lainnya sesuai data -->
