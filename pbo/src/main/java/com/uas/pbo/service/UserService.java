@@ -36,10 +36,5 @@ public class UserService {
         
         userRepository.save(user);
 
-        if ("DOSEN".equals(role.toUpperCase())) {
-            Dosen dosen = new Dosen();
-            dosen.setNip(identifier);
-            dosenRepository.save(dosen);
-        }
     }
 }
