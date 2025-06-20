@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+
 import java.util.Optional;
 
 import java.util.List;
@@ -70,8 +71,22 @@ public class AdminMainController {
     // NEW: This method handles the "Delete" button click
     @PostMapping("/admin/delete-class")
     public String deleteClass(@RequestParam("courseCode") String courseCode, RedirectAttributes redirectAttributes) {
-        classListService.deleteClass(courseCode);
-        redirectAttributes.addFlashAttribute("successMessage", "Class " + courseCode + " was deleted successfully.");
+        
+        // The try...catch block is essential.
+        try {
+            // 1. We ATTEMPT to delete the class by calling the service.
+            classListService.deleteClass(courseCode);
+            
+            // 2. If the line above succeeds without error, we set a SUCCESS message.
+            redirectAttributes.addFlashAttribute("successMessage", "Class " + courseCode + " was deleted successfully.");
+        
+        } catch (IllegalStateException e) {
+            // 3. If the service throws our specific exception, we CATCH it here.
+            // Instead of crashing, we set an ERROR message.
+            redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
+        }
+        
+        // 4. In either case (success or caught error), we redirect the user back to the list page.
         return "redirect:/admin/Class-list";
     }
 

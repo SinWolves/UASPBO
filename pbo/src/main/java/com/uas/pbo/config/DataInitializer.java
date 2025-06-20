@@ -48,34 +48,34 @@ public class DataInitializer {
             }
 
             // Add ClassList entries if DB is empty
-            if (classListRepository.count() == 0) {
-                classListRepository.save(new ClassList(
-                    "CS101",
-                    "Introduction to Programming",
-                    3,
-                    "2023/1",
-                    "D-101",
-                    "Dr. Jos Timanta Tarigan, S.Kom., M.Sc."
-                ));
+            // if (classListRepository.count() == 0) {
+            //     classListRepository.save(new ClassList(
+            //         "CS101",
+            //         "Introduction to Programming",
+            //         3,
+            //         "2023/1",
+            //         "D-101",
+            //         "Dr. Jos Timanta Tarigan, S.Kom., M.Sc."
+            //     ));
 
-                classListRepository.save(new ClassList(
-                    "CS102",
-                    "Data Structures",
-                    4,
-                    "2023/2",
-                    "D-102",
-                    "Dr. Hendra Simanjuntak, M.Kom."
-                ));
+            //     classListRepository.save(new ClassList(
+            //         "CS102",
+            //         "Data Structures",
+            //         4,
+            //         "2023/2",
+            //         "D-102",
+            //         "Dr. Hendra Simanjuntak, M.Kom."
+            //     ));
 
-                classListRepository.save(new ClassList(
-                    "CS103",
-                    "Computer Networks",
-                    3,
-                    "2023/2",
-                    "D-103",
-                    "Dr. Suryanto, M.T."
-                ));
-            }
+            //     classListRepository.save(new ClassList(
+            //         "CS103",
+            //         "Computer Networks",
+            //         3,
+            //         "2023/2",
+            //         "D-103",
+            //         "Dr. Suryanto, M.T."
+            //     ));
+            // }
         };
     }
 }
