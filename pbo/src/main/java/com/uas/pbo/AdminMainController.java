@@ -21,6 +21,7 @@ import java.util.List;
 import com.uas.pbo.model.Dosen;
 import com.uas.pbo.model.Mahasiswa;
 import com.uas.pbo.model.User;
+import com.uas.pbo.exception.DuplicateApplicationException;
 import com.uas.pbo.model.ClassList;
 import com.uas.pbo.repository.DosenRepository;
 import com.uas.pbo.repository.MahasiswaRepository;
@@ -66,9 +67,15 @@ public class AdminMainController {
     @PostMapping("/admin/add-class")
     public String addClass(@ModelAttribute ClassList classList, RedirectAttributes redirectAttributes) {
         // @ModelAttribute automatically creates a ClassList object from the form fields.
-        classListService.addClass(classList);
-        redirectAttributes.addFlashAttribute("successMessage", "Class '" + classList.getCourseName() + "' was added successfully.");
-        return "redirect:/admin/Class-list";
+        try {
+            // 1. We ATTEMPT to add the class by calling the service.
+            classListService.addClass(classList);
+            return "redirect:/admin/Class-list";
+        } catch (DuplicateApplicationException e) {
+            // 2. If an error occurs, we set an ERROR message.
+            redirectAttributes.addFlashAttribute("errorMessage", "Failed to add class: " + e.getMessage());
+            return "redirect:/admin/Class-list"; // Redirect back to the class list page
+        }
     }
 
     // NEW: This method handles the "Delete" button click

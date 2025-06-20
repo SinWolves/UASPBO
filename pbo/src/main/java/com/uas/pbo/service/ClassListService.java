@@ -1,5 +1,6 @@
 package com.uas.pbo.service;
 
+import com.uas.pbo.exception.DuplicateApplicationException;
 import com.uas.pbo.model.ClassList;
 import com.uas.pbo.repository.ClassListRepository;
 import com.uas.pbo.repository.MahasiswaRepository;
@@ -34,6 +35,10 @@ public class ClassListService {
      * @param classList The ClassList object to save.
      */
     public void addClass(ClassList classList) {
+        if (classListRepository.existsByCourseCode(classList.getCourseCode())) {
+            // If it exists, throw our custom exception with a clear message.
+            throw new DuplicateApplicationException("This course code has already existed.");
+        }
         // You could add validation logic here, e.g., check if courseCode already exists.
         classListRepository.save(classList);
     }
