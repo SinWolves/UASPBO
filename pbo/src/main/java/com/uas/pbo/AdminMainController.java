@@ -140,9 +140,15 @@ public class AdminMainController {
                 
                 // optional check for matching mata kuliah
                 if (mahasiswa.getCourseCode().equals(coursecode)) {
-                    mahasiswa.setStatus(status);
-                    mahasiswaRepository.save(mahasiswa);
-                    return "redirect:/admin/mahasiswa"; 
+                    if (status.equals("DECLINED")) {
+                        mahasiswaRepository.delete(mahasiswa);
+                        return "redirect:/admin/mahasiswa"; 
+                    }
+                    else{
+                        mahasiswa.setStatus(status);
+                        mahasiswaRepository.save(mahasiswa);
+                        return "redirect:/admin/mahasiswa"; 
+                    }
                 }
             }
         }

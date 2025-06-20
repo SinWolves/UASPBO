@@ -66,7 +66,7 @@
                                 <td>
                                     <form th:if="${masis.status == 'PENDING'}" th:action="@{/admin/approve}" method="post" style="display:inline;">
                                         <input type="hidden" name="nip" th:value="${masis.id}">
-                                        <input type="hidden" name="mataKuliah" th:value="${masis.courseCode}">
+                                        <input type="hidden" name="coursecode" th:value="${masis.courseCode}">
                                         <input type="hidden" name="role" th:value="${masis.user.role}">
                                         <button type="submit" class="add-btn" name="action" value="approve">Approve</button>
                                         <button type="submit" class="add-btn" name="action" style="background-color: red;" value="decline">Decline</button>
