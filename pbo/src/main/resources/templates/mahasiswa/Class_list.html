@@ -12,8 +12,9 @@
     <!-- Horizontal Top Navbar -->
     <ul class="navbar">
         <li><a>Studious</a></li>
-        <p th:if="${classLists != null}" th:text="'Jumlah kelas: ' + ${#lists.size(classLists)}"></p>
-        <p th:unless="${classLists != null}">Data tidak tersedia</p>
+        <!-- <p th:if="${classLists != null}" th:text="'Jumlah kelas: ' + ${#lists.size(classLists)}"></p>
+        <p th:unless="${classLists != null}">Data tidak tersedia</p> -->
+        <!-- Above is the debug (now is solved)-->
 
         <form th:action="@{/logout}" method="post">
             <button type="submit" class="btn-login">
@@ -44,37 +45,42 @@
             <div class="content-box">
                 <h1>All Class</h1>
 
-                <!-- Apply Button -->
-                <div class="table-header">
-                    <button id="applyBtn" class="apply-btn" disabled>Apply Class</button>
-                </div>
+                <div th:if="${successMessage}" class="alert alert-success" th:text="${successMessage}"></div>
+                <div th:if="${errorMessage}" class="alert alert-danger" th:text="${errorMessage}"></div>
 
-                <!-- Table -->
-                <div class="table-container">
-                    <table class="class-table">
-                        <thead>
-                            <tr>
-                                <th>Course Code</th>
-                                <th>Course Name</th>
-                                <th>Credits</th>
-                                <th>Semester</th>
-                                <th>Classroom</th>
-                                <th>Lecturer</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr th:each="classItem : ${classLists}">
-                                <td th:text="${classItem.courseCode}">CS101</td>
-                                <td th:text="${classItem.courseName}">Intro to Programming</td>
-                                <td th:text="${classItem.credits}">3</td>
-                                <td th:text="${classItem.semester}">2023/1</td>
-                                <td th:text="${classItem.classroom}">D-101</td>
-                                <td th:text="${classItem.lecturer}">Dr. Jos Timanta Tarigan</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+                <form id="applyForm" th:action="@{/mahasiswa/apply}" method="post">
 
+                    <input type="hidden" id="selectedCourseCode" name="courseCode" value="">
+
+                    <div class="table-header">
+                        <button id="applyBtn" type="submit" class="apply-btn" disabled>Apply Class</button>
+                    </div>
+                
+                    <div class="table-container">
+                        <table class="class-table">
+                            <thead>
+                                <tr>
+                                    <th>Course Code</th>
+                                    <th>Course Name</th>
+                                    <th>Credits</th>
+                                    <th>Semester</th>
+                                    <th>Classroom</th>
+                                    <th>Lecturer</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="classItem : ${classLists}">
+                                    <td th:text="${classItem.courseCode}">CS101</td>
+                                    <td th:text="${classItem.courseName}">Intro to Programming</td>
+                                    <td th:text="${classItem.credits}">3</td>
+                                    <td th:text="${classItem.semester}">2023/1</td>
+                                    <td th:text="${classItem.classroom}">D-101</td>
+                                    <td th:text="${classItem.lecturer}">Dr. Jos Timanta Tarigan</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </form>
                 <!-- Pagination Controls -->
                 <div class="pagination-controls">
                     <div class="pagination-inner">
@@ -144,18 +150,25 @@
 
         rows.forEach(row => {
             row.addEventListener("click", () => {
+                // This logic deselects a row if it's clicked again
                 if (row === selectedRow) {
                     row.classList.remove("selected");
                     selectedRow = null;
                     applyBtn.disabled = true;
+                    document.getElementById('selectedCourseCode').value = ''; // Clear value
                     return;
                 }
 
+                // This logic handles selecting a new row
                 if (selectedRow) selectedRow.classList.remove("selected");
-
                 selectedRow = row;
                 row.classList.add("selected");
                 applyBtn.disabled = false;
+
+                // Get the course code from the first cell of the selected row
+                const courseCode = selectedRow.cells[0].textContent.trim();
+                // Set the value of our hidden form input
+                document.getElementById('selectedCourseCode').value = courseCode;
             });
         });
 
