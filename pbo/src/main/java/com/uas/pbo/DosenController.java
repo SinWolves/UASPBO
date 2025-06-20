@@ -52,16 +52,21 @@ public class DosenController {
 
     @PostMapping("/dosen/apply")
     public String applyForClass(@RequestParam("courseCode") String courseCode,
+                                @RequestParam("lecturer") String lecturer,
                                 @AuthenticationPrincipal User user,
                                 RedirectAttributes redirectAttributes) {
 
         String nip = user.getIdentifier();
 
         try {
-            // 1. Call the service to perform the business logic.
+            if (lecturer != null && !lecturer.trim().isEmpty()) {
+                redirectAttributes.addFlashAttribute("errorMessage", "This class already has a lecturer assigned.");
+                return "redirect:/dosen/Class_list";
+            }else
+            {// 1. Call the service to perform the business logic.
             dosenService.applyForClass(nip, courseCode);
             // 2. If it succeeds without error, set the success message.
-            redirectAttributes.addFlashAttribute("successMessage", "Successfully applied for class " + courseCode + ". Waiting for approval.");
+            redirectAttributes.addFlashAttribute("successMessage", "Successfully applied for class " + courseCode + ". Waiting for approval.");}
         
         } catch (DuplicateApplicationException e) {
             // 3. If the service throws our specific exception, set the error message.

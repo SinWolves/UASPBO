@@ -51,10 +51,13 @@
                     <form id="applyForm" th:action="@{/dosen/apply}" method="post">
 
                         <input type="hidden" id="selectedCourseCode" name="courseCode" value="">
+                        <input type="hidden" id="selectedLecturer" name="lecturer" value="">
 
                             <div class="table-header">
                                 <button id="applyBtn" class="apply-btn" disabled>Apply as Lecturer</button>
                             </div>
+                            <div style="background-color: greenyellow;" th:if="${successMessage}" class="alert alert-success" th:text="${successMessage}"></div>
+                            <div style="background-color: red;"th:if="${errorMessage}" class="alert alert-error" th:text="${errorMessage}"></div>
                         <table class="class-table">
                             <thead>
                                 <tr>
@@ -180,7 +183,9 @@
 
             // Get the course code from the first cell of the selected row
                 const courseCode = selectedRow.cells[1].textContent.trim();
+                const lecturerName = selectedRow.cells[6].textContent.trim();
                 // Set the value of our hidden form input
+                document.getElementById('selectedLecturer').value = lecturerName;
                 document.getElementById('selectedCourseCode').value = courseCode;
         });
     });
