@@ -27,6 +27,14 @@ public class Dosen {
     @Column(name = "status")
     private String status;
 
+    public Dosen() {
+    }
+
+    public Dosen(String nip, String courseCode, String status) {
+        this.nip = nip;
+        this.courseCode = courseCode;
+        this.status = status;
+    }
     // Getters and Setters
     public String getNip() {
         return nip;

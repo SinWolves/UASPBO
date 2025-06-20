@@ -21,31 +21,31 @@ public class DataInitializer {
     ) {
         return args -> {
             // Add Users if DB is empty
-            if (userRepository.count() == 0) {
-                User admin = new User();
-                admin.setIdentifier("ADM-0177");
-                admin.setEmail("maulana31@gmail.com");
-                admin.setName("Maulana Hasim");
-                admin.setPassword(passwordEncoder.encode("@Dm0177"));
-                admin.setRole("ADMIN");
-                userRepository.save(admin);
+            // if (userRepository.count() == 0) {
+            //     User admin = new User();
+            //     admin.setIdentifier("ADM-0177");
+            //     admin.setEmail("maulana31@gmail.com");
+            //     admin.setName("Maulana Hasim");
+            //     admin.setPassword(passwordEncoder.encode("@Dm0177"));
+            //     admin.setRole("ADMIN");
+            //     userRepository.save(admin);
 
-                User dosen = new User();
-                dosen.setIdentifier("1993112523041052");
-                dosen.setEmail("auliatanjung93@gmail.com");
-                dosen.setName("Aulia Akbar Tanjung");
-                dosen.setPassword(passwordEncoder.encode("D$n052"));
-                dosen.setRole("DOSEN");
-                userRepository.save(dosen);
+            //     User dosen = new User();
+            //     dosen.setIdentifier("1993112523041052");
+            //     dosen.setEmail("auliatanjung93@gmail.com");
+            //     dosen.setName("Aulia Akbar Tanjung");
+            //     dosen.setPassword(passwordEncoder.encode("D$n052"));
+            //     dosen.setRole("DOSEN");
+            //     userRepository.save(dosen);
 
-                User mahasiswa = new User();
-                mahasiswa.setIdentifier("251402117");
-                mahasiswa.setEmail("falkrynst222@gmail.com");
-                mahasiswa.setName("Ahmad Falkry Nasution");
-                mahasiswa.setPassword(passwordEncoder.encode("Mh$117"));
-                mahasiswa.setRole("MAHASISWA");
-                userRepository.save(mahasiswa);
-            }
+            //     User mahasiswa = new User();
+            //     mahasiswa.setIdentifier("251402117");
+            //     mahasiswa.setEmail("falkrynst222@gmail.com");
+            //     mahasiswa.setName("Ahmad Falkry Nasution");
+            //     mahasiswa.setPassword(passwordEncoder.encode("Mh$117"));
+            //     mahasiswa.setRole("MAHASISWA");
+            //     userRepository.save(mahasiswa);
+            // }
 
             // Add ClassList entries if DB is empty
             // if (classListRepository.count() == 0) {

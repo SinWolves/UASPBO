@@ -3,7 +3,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Mahasiswa Home</title>
+    <title>satu.univ</title>
     <link rel="stylesheet" href="../CSS/dashboard.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -48,33 +48,38 @@
                 <div class="table-container">
                     <div class="table-container">
                         <!-- Header tabel + Tombol di kanan -->
-                        <div class="table-header">
-                            <button id="applyBtn" class="apply-btn" disabled>Apply as Lecturer</button>
-                        </div>
-                    <table class="class-table">
-                        <thead>
-                            <tr>
-                                <th>No</th>
-                                <th>Course Code</th>
-                                <th>Course Name</th>
-                                <th>Credits</th>
-                                <th>Semester</th>
-                                <th>Classroom</th>
-                                <th>Lecturer</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr th:each="matkul, iterStat : ${classLists}">
-                                <td th:text="${iterStat.index + 1}"></td>
-                                <td th:text="${matkul.courseCode}"></td>
-                                <td th:text="${matkul.courseName}"></td>
-                                <td th:text="${matkul.credits}"></td>
-                                <td th:text="${matkul.semester}"></td>
-                                <td th:text="${matkul.classroom}"></td>
-                                <td th:text="${matkul.lecturer}"></td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <form id="applyForm" th:action="@{/dosen/apply}" method="post">
+
+                        <input type="hidden" id="selectedCourseCode" name="courseCode" value="">
+
+                            <div class="table-header">
+                                <button id="applyBtn" class="apply-btn" disabled>Apply as Lecturer</button>
+                            </div>
+                        <table class="class-table">
+                            <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>Course Code</th>
+                                    <th>Course Name</th>
+                                    <th>Credits</th>
+                                    <th>Semester</th>
+                                    <th>Classroom</th>
+                                    <th>Lecturer</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="matkul, iterStat : ${classLists}">
+                                    <td th:text="${iterStat.index + 1}"></td>
+                                    <td th:text="${matkul.courseCode}"></td>
+                                    <td th:text="${matkul.courseName}"></td>
+                                    <td th:text="${matkul.credits}"></td>
+                                    <td th:text="${matkul.semester}"></td>
+                                    <td th:text="${matkul.classroom}"></td>
+                                    <td th:text="${matkul.lecturer}"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </form>
 <!-- Pagination Controls -->
     <div class="pagination-controls">
         <div class="pagination-inner">
@@ -172,6 +177,11 @@
             selectedRow = row;
             row.classList.add("selected");
             applyBtn.disabled = false;
+
+            // Get the course code from the first cell of the selected row
+                const courseCode = selectedRow.cells[1].textContent.trim();
+                // Set the value of our hidden form input
+                document.getElementById('selectedCourseCode').value = courseCode;
         });
     });
 
