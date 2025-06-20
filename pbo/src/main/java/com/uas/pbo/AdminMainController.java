@@ -78,7 +78,7 @@ public class AdminMainController {
                 Dosen dosen = optionalDosen.get();
                 
                 // optional check for matching mata kuliah
-                if (dosen.getMataKuliah().equals(mataKuliah)) {
+                if (dosen.getCourseCode().equals(mataKuliah)) {
                     dosen.setStatus(status);
                     dosenRepository.save(dosen);
                     return "redirect:/admin/home"; 

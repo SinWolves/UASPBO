@@ -1,9 +1,5 @@
 package com.uas.pbo.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.*;
 
 @Entity
@@ -18,8 +14,12 @@ public class Dosen {
     @JoinColumn(name = "nip", referencedColumnName = "IDENTIFIER", insertable = false, updatable = false)
     private User user;
 
-    @Column(name = "mata_kuliah")
-    private String mataKuliah;
+    @Column(name = "course_code")
+    private String courseCode;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "course_code", referencedColumnName = "COURSE_CODE", insertable = false, updatable = false)
+    private ClassList classList;
 
     @Column(name = "status")
     private String status;
@@ -41,12 +41,12 @@ public class Dosen {
         this.user = user;
     }
 
-    public String getMataKuliah() {
-        return mataKuliah;
+    public ClassList getClassList() {
+        return classList;
     }
 
-    public void setMataKuliah(String mataKuliah) {
-        this.mataKuliah = mataKuliah;
+    public void setClassList(ClassList classList) {
+        this.classList = classList;
     }
 
     public String getStatus() {
@@ -55,5 +55,12 @@ public class Dosen {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+    public String getCourseCode() {
+        return courseCode;
+    }
+
+    public void setCourseCode(String courseCode) {
+        this.courseCode = courseCode;
     }
 }
