@@ -1,25 +1,36 @@
 package com.uas.pbo.model;
 
+import jakarta.persistence.Column; // <-- ADD THIS IMPORT
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-
-
 
 @Entity
 @Table(name = "class_list")
 public class ClassList {
 
     @Id
+    @Column(name = "COURSE_CODE") // <-- ADD THIS LINE
     private String courseCode;
 
+    // It is best practice to map all columns explicitly
+    @Column(name = "COURSE_NAME") // <-- ADD THIS LINE
     private String courseName;
+
+    @Column(name = "CREDITS") // <-- ADD THIS LINE
     private int credits;
+
+    @Column(name = "SEMESTER") // <-- ADD THIS LINE
     private String semester;
+
+    @Column(name = "CLASSROOM") // <-- ADD THIS LINE
     private String classroom;
+
+    @Column(name = "LECTURER") // <-- ADD THIS LINE
     private String lecturer;
 
     public ClassList() {}
+    
     // Getters and Setters
     public String getCourseCode() {
         return courseCode;
@@ -64,7 +75,7 @@ public class ClassList {
     }
 
     public ClassList(String courseCode, String courseName, int credits,
-                 String semester, String classroom, String lecturer) {
+                   String semester, String classroom, String lecturer) {
         this.courseCode = courseCode;
         this.courseName = courseName;
         this.credits = credits;

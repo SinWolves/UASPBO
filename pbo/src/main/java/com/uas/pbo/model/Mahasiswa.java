@@ -2,27 +2,46 @@ package com.uas.pbo.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "mahasiswa_courses") // This will be the table name in the database
+@Table(name = "mahasiswa_courses")
 public class Mahasiswa {
 
+    // FIX 1: Use an auto-generated Long ID as the unique primary key for each enrollment.
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    // This is now a regular column, not the primary key.
     @Column(name = "nim", nullable = false)
-    private String nim; // The student's NIM (from APP_USER.IDENTIFIER)
+    private String nim;
 
+    // This is now a regular column.
     @Column(name = "course_code", nullable = false)
-    private String courseCode; // The course code (from CLASS_LIST.COURSE_CODE)
+    private String courseCode;
 
     @Column(name = "status", nullable = false)
-    private String status; // Will be set to "PENDING" by default
+    private String status;
+
+    // FIX 2: The relationship is Many-To-One, not One-To-One.
+    // This allows you to get the full User object from an enrollment if needed.
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "nim", referencedColumnName = "IDENTIFIER", insertable = false, updatable = false)
+    private User user;
+
+    // FIX 2: The relationship is Many-To-One, not One-To-One.
+    // This allows you to get the full ClassList object from an enrollment if needed.
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "course_code", referencedColumnName = "COURSE_CODE", insertable = false, updatable = false)
+    private ClassList classList;
+
 
     // Constructors
     public Mahasiswa() {
@@ -34,7 +53,8 @@ public class Mahasiswa {
         this.status = status;
     }
 
-    // Getters and Setters
+    // Getters and Setters (I've added the missing ID getter/setter)
+
     public Long getId() {
         return id;
     }
@@ -65,5 +85,21 @@ public class Mahasiswa {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public ClassList getClassList() {
+        return classList;
+    }
+
+    public void setClassList(ClassList classList) {
+        this.classList = classList;
     }
 }

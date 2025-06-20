@@ -1,11 +1,13 @@
 package com.uas.pbo;
 
+import com.uas.pbo.exception.DuplicateApplicationException;
 // Import the missing classes
 import com.uas.pbo.model.ClassList;
 import com.uas.pbo.model.Mahasiswa;
 import com.uas.pbo.model.User;
 import com.uas.pbo.repository.ClassListRepository;
 import com.uas.pbo.repository.MahasiswaRepository;
+import com.uas.pbo.service.MahasiswaService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -25,9 +27,9 @@ public class MahasiswaController {
     @Autowired
     private ClassListRepository classListRepository;
 
-    // REPO FROM 
+    // MODIFIED: The controller now depends on the Service, not the Repository for this logic.
     @Autowired
-    private MahasiswaRepository mahasiswaRepository;
+    private MahasiswaService mahasiswaService;
 
     @GetMapping("mahasiswa/Class_list")
     public String classList(@AuthenticationPrincipal User user, Model model) {
@@ -53,7 +55,7 @@ public class MahasiswaController {
         return "mahasiswa/home"; // assuming you have a home.html
     }
 
-        // NEW: This method handles the 'Apply Class' button submission
+    // MODIFIED: This method is now much simpler.
     @PostMapping("/mahasiswa/apply")
     public String applyForClass(@RequestParam("courseCode") String courseCode,
                                 @AuthenticationPrincipal User user,
@@ -61,19 +63,17 @@ public class MahasiswaController {
 
         String nim = user.getIdentifier();
 
-        // Check if the student has already applied for this class
-        if (mahasiswaRepository.existsByNimAndCourseCode(nim, courseCode)) {
-            redirectAttributes.addFlashAttribute("errorMessage", "You have already applied for this class.");
-            return "redirect:/mahasiswa/Class_list";
+        try {
+            // 1. Call the service to perform the business logic.
+            mahasiswaService.applyForClass(nim, courseCode);
+            // 2. If it succeeds without error, set the success message.
+            redirectAttributes.addFlashAttribute("successMessage", "Successfully applied for class " + courseCode + ". Waiting for approval.");
+        
+        } catch (DuplicateApplicationException e) {
+            // 3. If the service throws our specific exception, set the error message.
+            redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
         }
 
-        // Create a new enrollment record with "PENDING" status
-        Mahasiswa newEnrollment = new Mahasiswa(nim, courseCode, "PENDING");
-        mahasiswaRepository.save(newEnrollment);
-
-        // Send a success message back to the user
-        redirectAttributes.addFlashAttribute("successMessage", "Successfully applied for class " + courseCode + ". Waiting for approval.");
-        
         return "redirect:/mahasiswa/Class_list";
     }
 }
