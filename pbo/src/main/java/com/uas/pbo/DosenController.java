@@ -7,9 +7,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import com.uas.pbo.model.User;
 
+
 @Controller
 public class DosenController {
 
+    @GetMapping("/dosen/home")
+    public String getMethodName(@AuthenticationPrincipal User user, Model model) {
+        model.addAttribute("name", user.getName());
+        return "dosen/home";
+    }
+    
 
     @GetMapping("dosen/Class_list")
     public String classList(@AuthenticationPrincipal User user, Model model) {
