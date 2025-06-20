@@ -2,10 +2,15 @@ package com.uas.pbo;
 
 
 import org.springframework.boot.autoconfigure.kafka.KafkaProperties.Admin;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import java.util.Optional;
 
 import java.util.List;
 
@@ -40,5 +45,25 @@ public class AdminMainController {
     public String mahasiswa(@AuthenticationPrincipal User user, Model model) {
         model.addAttribute("name", user.getName());
         return "admin/mahasiswa"; 
+    }
+
+
+    @PostMapping("/admin/approve")
+    public String approveDosen(@RequestParam String nip,
+                                        @RequestParam String mataKuliah) {
+        Optional<Dosen> optionalDosen = dosenRepository.findById(nip);
+
+        if (optionalDosen.isPresent()) {
+            Dosen dosen = optionalDosen.get();
+            
+            // optional check for matching mata kuliah
+            if (dosen.getMataKuliah().equals(mataKuliah)) {
+                dosen.setStatus("APPROVED");
+                dosenRepository.save(dosen);
+                return "redirect:/admin/home"; 
+            }
+        }
+
+        return "redirect:/admin/home";
     }
 }

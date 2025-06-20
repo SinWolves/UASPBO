@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Mahasiswa Home</title>
+    <title>Admin Home</title>
     <link rel="stylesheet" href="../CSS/dashboard.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -62,7 +62,14 @@
                                 <td th:text="${dosen.user.name}"></td>
                                 <td th:text="${dosen.user.email}"></td>
                                 <td th:text="${dosen.mataKuliah}"></td>
-                                <td><button class="add-btn">Approve</button></td>
+                                <td>
+                                    <form th:if="${dosen.status != 'APPROVED'}" th:action="@{/admin/approve}" method="post" style="display:inline;">
+                                        <input type="hidden" name="nip" th:value="${dosen.nip}">
+                                        <input type="hidden" name="mataKuliah" th:value="${dosen.mataKuliah}">
+                                        <button type="submit" class="add-btn">Approve</button>
+                                    </form>
+                                    <span th:if="${dosen.status == 'APPROVED'}" class="approved-text" style="color: green; font-weight: bold;">Approved</span>
+                                </td>
                             </tr>
                             <!-- Tambahkan baris lainnya sesuai data -->
                         </tbody>
