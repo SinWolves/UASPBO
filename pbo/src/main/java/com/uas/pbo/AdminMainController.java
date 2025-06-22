@@ -137,8 +137,13 @@ public class AdminMainController {
                     classListRepository.save(classList);
                     dosenRepository.save(dosen);
 
+                    // Hapus semua dosen dengan course code yang sama dan status PENDING
+                    List<Dosen> sameCourseCode = dosenRepository.findByCourseCodeAndStatus(coursecode, "PENDING");
+                    dosenRepository.deleteAll(sameCourseCode);
+
                     return "redirect:/admin/home"; 
                 }
+
             }
         } 
         else if (role.equals("MAHASISWA")) {

@@ -10,6 +10,7 @@ import java.util.List;
 public interface DosenRepository extends JpaRepository<Dosen, Long> {
     List<Dosen> findByNipAndStatus(String nip, String status);
     List<Dosen> findByNip(String nip);
+    List<Dosen> findByCourseCodeAndStatus(String courseCode, String status);
     boolean existsByNipAndCourseCode(String nip, String courseCode);
     boolean existsByCourseCode(String courseCode);
 }

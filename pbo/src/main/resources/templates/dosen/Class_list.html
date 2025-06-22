@@ -48,44 +48,74 @@
                 <div class="table-container">
                     <div class="table-container">
                         <!-- Header tabel + Tombol di kanan -->
-                    <form id="applyForm" th:action="@{/dosen/apply}" method="post">
+                        <form id="applyForm" th:action="@{/dosen/apply}" method="post">
 
-                        <input type="hidden" id="selectedCourseCode" name="courseCode" value="">
-                        <input type="hidden" id="selectedLecturer" name="lecturer" value="">
+                            <input type="hidden" id="selectedCourseCode" name="courseCode" value="">
+                            <input type="hidden" id="selectedLecturer" name="lecturer" value="">
 
-                        <div style="background-color: greenyellow;" th:if="${successMessage}" class="alert alert-success" th:text="${successMessage}"></div>
-                        <div style="background-color: red;"th:if="${errorMessage}" class="alert alert-error" th:text="${errorMessage}"></div>
-                            <div class="table-header">
-                                <button id="applyBtn" class="apply-btn" disabled>Apply as Lecturer</button>
+                            <div th:if="${successMessage}" class="alert alert-success" th:text="${successMessage}"></div>
+                            <div th:if="${errorMessage}" class="alert alert-danger" th:text="${errorMessage}"></div>
+                                <div class="table-header">
+                                    <button id="applyBtn" class="apply-btn" disabled>Apply as Lecturer</button>
+                                </div>
+                            <table class="class-table">
+                                <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>Course Code</th>
+                                        <th>Course Name</th>
+                                        <th>Credits</th>
+                                        <th>Semester</th>
+                                        <th>Classroom</th>
+                                        <th>Lecturer</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:each="matkul, iterStat : ${classLists}">
+                                        <td th:text="${iterStat.index + 1}"></td>
+                                        <td th:text="${matkul.courseCode}"></td>
+                                        <td th:text="${matkul.courseName}"></td>
+                                        <td th:text="${matkul.credits}"></td>
+                                        <td th:text="${matkul.semester}"></td>
+                                        <td th:text="${matkul.classroom}"></td>
+                                        <td th:text="${matkul.lecturer}"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </form>
+                        <!-- Pagination Controls -->
+                        <div class="pagination-controls">
+                            <div class="pagination-inner">
+                                <label for="rowsPerPage">Rows per page:</label>
+                                <select id="rowsPerPage" onchange="changeRowsPerPage()">
+                                    <option value="2">2</option>
+                                    <option value="3" selected>3</option>
+                                    <option value="5">5</option>
+                                    <option value="10">10</option>
+                                </select>
+
+                                <img src="../../img&icon/Arrow right (1).png"
+                                    id="btnPrev"
+                                    alt="Previous page"
+                                    class="page-btn"
+                                    onclick="previousPage()">
+                                <span id="pageInfo"></span>
+                                <img src="../../img&icon/Arrow right.png"
+                                    id="btnNext"
+                                    alt="Next page"
+                                    class="page-btn"
+                                    onclick="nextPage()">
                             </div>
-                        <table class="class-table">
-                            <thead>
-                                <tr>
-                                    <th>No</th>
-                                    <th>Course Code</th>
-                                    <th>Course Name</th>
-                                    <th>Credits</th>
-                                    <th>Semester</th>
-                                    <th>Classroom</th>
-                                    <th>Lecturer</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr th:each="matkul, iterStat : ${classLists}">
-                                    <td th:text="${iterStat.index + 1}"></td>
-                                    <td th:text="${matkul.courseCode}"></td>
-                                    <td th:text="${matkul.courseName}"></td>
-                                    <td th:text="${matkul.credits}"></td>
-                                    <td th:text="${matkul.semester}"></td>
-                                    <td th:text="${matkul.classroom}"></td>
-                                    <td th:text="${matkul.lecturer}"></td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-                        <br><br><br><br><br>
-                        <!-- Table Approval -->
-                         <h1>Your Approval Request</h1>
+            <br><br><br><br><br>
+            <div class="content-box">
+                <h1>Your Approval Request</h1>
+                <div class="table-container">
+                    <div class="table-container">
                         <table class="class-table">
                             <thead>
                                 <tr>
@@ -98,37 +128,41 @@
                                 <tr th:each="dosen, iterStat : ${dosenList}">
                                     <td th:text="${iterStat.index + 1}"></td>
                                     <td th:text="${dosen.courseCode}"></td>
-                                    <td th:text="${dosen.status}"></td>
+                                    <td> 
+                                        <span th:text="${dosen.status}" 
+                                            th:class="${dosen.status == 'APPROVED'} ? 'status-badge status-approved' : 'status-badge status-pending'">
+                                        </span>
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
-                    </form>
-<!-- Pagination Controls -->
-    <div class="pagination-controls">
-        <div class="pagination-inner">
-            <label for="rowsPerPage">Rows per page:</label>
-            <select id="rowsPerPage" onchange="changeRowsPerPage()">
-                <option value="2">2</option>
-                <option value="3" selected>3</option>
-                <option value="5">5</option>
-                <option value="10">10</option>
-            </select>
+                        <!-- Pagination Controls -->
+                        <!-- <div class="pagination-controls">
+                            <div class="pagination-inner">
+                                <label for="rowsPerPage">Rows per page:</label>
+                                <select id="rowsPerPage" onchange="changeRowsPerPage()">
+                                    <option value="2">2</option>
+                                    <option value="3" selected>3</option>
+                                    <option value="5">5</option>
+                                    <option value="10">10</option>
+                                </select>
 
-            <img src="../../img&icon/Arrow right (1).png"
-                 id="btnPrev"
-                 alt="Previous page"
-                 class="page-btn"
-                 onclick="previousPage()">
-            <span id="pageInfo"></span>
-            <img src="../../img&icon/Arrow right.png"
-                 id="btnNext"
-                 alt="Next page"
-                 class="page-btn"
-                 onclick="nextPage()">
-        </div>
-    </div>
-
-
+                                <img src="../../img&icon/Arrow right (1).png"
+                                    id="btnPrev"
+                                    alt="Previous page"
+                                    class="page-btn"
+                                    onclick="previousPage()"
+                                >
+                                <span id="pageInfo"></span>
+                                <img src="../../img&icon/Arrow right.png"
+                                    id="btnNext"
+                                    alt="Next page"
+                                    class="page-btn"
+                                    onclick="nextPage()"
+                                >
+                            </div>
+                        </div> -->
+                    </div>
                 </div>
             </div>
         </div>
