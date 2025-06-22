@@ -14,6 +14,8 @@ public interface MahasiswaRepository extends JpaRepository<Mahasiswa, Long> {
     // Spring Data JPA will automatically create the query for us based on the method name.
     List<Mahasiswa> findByNimAndStatus(String nim, String status);
 
+    List<Mahasiswa> findByNim(String nim);
+
         // ADD THIS NEW METHOD:
     boolean existsByCourseCode(String courseCode);
 }

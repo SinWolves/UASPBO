@@ -128,14 +128,16 @@
                                 <tr th:each="dosen, iterStat : ${dosenList}">
                                     <td th:text="${iterStat.index + 1}"></td>
                                     <td th:text="${dosen.courseCode}"></td>
-                                    <td> 
-                                        <span th:text="${dosen.status}" 
-                                            th:class="${dosen.status == 'APPROVED'} ? 'status-badge status-approved' : 'status-badge status-pending'">
-                                        </span>
+                                    <td th:switch="${dosen.status}">
+                                        <span th:case="'APPROVED'" class="status-badge status-approved" th:text="${dosen.status}"></span>
+                                        <span th:case="'PENDING'" class="status-badge status-pending" th:text="${dosen.status}"></span>
+                                        <span th:case="'DECLINED'" class="status-badge status-rejected" th:text="${dosen.status}"></span>
+                                        <span th:case="*" th:text="${dosen.status}"></span>
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
+                        <h3>Note: If your Request is missing, it is likely that another lecturer has been assigned</h3>
                         <!-- Pagination Controls -->
                         <!-- <div class="pagination-controls">
                             <div class="pagination-inner">

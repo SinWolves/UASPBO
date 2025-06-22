@@ -31,7 +31,7 @@ public class DosenService {
         // 1. Business Rule: Check if an application already exists.
         if (dosenRepository.existsByNipAndCourseCode(nip, courseCode)) {
             // If it exists, throw our custom exception with a clear message.
-            throw new DuplicateApplicationException("You have already applied for this class.");
+            throw new DuplicateApplicationException("You have already applied / Admin rejected your application.");
         }
 
         // 2. If no duplicate is found, create the new enrollment record.

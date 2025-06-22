@@ -98,6 +98,63 @@
                     </div>
                 </div>
             </div>
+
+            <br><br><br><br><br>
+            <div class="content-box">
+                <h1>Your Approval Request</h1>
+                <div class="table-container">
+                    <div class="table-container">
+                        <table class="class-table">
+                            <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>Course Code</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="ms, iterStat : ${mahasiswaList}">
+                                    <td th:text="${iterStat.index + 1}"></td>
+                                    <td th:text="${ms.courseCode}"></td>
+                                    <td th:switch="${ms.status}">
+                                        <span th:case="'APPROVED'" class="status-badge status-approved" th:text="${ms.status}"></span>
+                                        <span th:case="'PENDING'" class="status-badge status-pending" th:text="${ms.status}"></span>
+                                        <span th:case="'DECLINED'" class="status-badge status-rejected" th:text="${ms.status}"></span>
+                                        <span th:case="*" th:text="${ms.status}"></span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <h3>Note: if your request disappear, Admin might have rejected your request. You can re-apply again</h3>
+                        <!-- Pagination Controls -->
+                        <!-- <div class="pagination-controls">
+                            <div class="pagination-inner">
+                                <label for="rowsPerPage">Rows per page:</label>
+                                <select id="rowsPerPage" onchange="changeRowsPerPage()">
+                                    <option value="2">2</option>
+                                    <option value="3" selected>3</option>
+                                    <option value="5">5</option>
+                                    <option value="10">10</option>
+                                </select>
+
+                                <img src="../../img&icon/Arrow right (1).png"
+                                    id="btnPrev"
+                                    alt="Previous page"
+                                    class="page-btn"
+                                    onclick="previousPage()"
+                                >
+                                <span id="pageInfo"></span>
+                                <img src="../../img&icon/Arrow right.png"
+                                    id="btnNext"
+                                    alt="Next page"
+                                    class="page-btn"
+                                    onclick="nextPage()"
+                                >
+                            </div>
+                        </div> -->
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 

@@ -31,8 +31,17 @@ public class MahasiswaController {
     @Autowired
     private MahasiswaService mahasiswaService;
 
+    private final MahasiswaRepository mahasiswaRepository;
+
+    public MahasiswaController(MahasiswaRepository mahasiswaRepository) {
+        this.mahasiswaRepository = mahasiswaRepository;
+    }
+
     @GetMapping("mahasiswa/Class_list")
     public String classList(@AuthenticationPrincipal User user, Model model) {
+
+        List<Mahasiswa> mahasiswaList = mahasiswaRepository.findByNim(user.getIdentifier());
+        model.addAttribute("mahasiswaList", mahasiswaList);
         // STEP 2: Add all the required data to the model in one place
 
         // 1. Get the user's name (this was already here)
