@@ -53,11 +53,11 @@
                         <input type="hidden" id="selectedCourseCode" name="courseCode" value="">
                         <input type="hidden" id="selectedLecturer" name="lecturer" value="">
 
+                        <div style="background-color: greenyellow;" th:if="${successMessage}" class="alert alert-success" th:text="${successMessage}"></div>
+                        <div style="background-color: red;"th:if="${errorMessage}" class="alert alert-error" th:text="${errorMessage}"></div>
                             <div class="table-header">
                                 <button id="applyBtn" class="apply-btn" disabled>Apply as Lecturer</button>
                             </div>
-                            <div style="background-color: greenyellow;" th:if="${successMessage}" class="alert alert-success" th:text="${successMessage}"></div>
-                            <div style="background-color: red;"th:if="${errorMessage}" class="alert alert-error" th:text="${errorMessage}"></div>
                         <table class="class-table">
                             <thead>
                                 <tr>
@@ -79,6 +79,26 @@
                                     <td th:text="${matkul.semester}"></td>
                                     <td th:text="${matkul.classroom}"></td>
                                     <td th:text="${matkul.lecturer}"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <br><br><br><br><br>
+                        <!-- Table Approval -->
+                         <h1>Your Approval Request</h1>
+                        <table class="class-table">
+                            <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>Course Code</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="dosen, iterStat : ${dosenList}">
+                                    <td th:text="${iterStat.index + 1}"></td>
+                                    <td th:text="${dosen.courseCode}"></td>
+                                    <td th:text="${dosen.status}"></td>
                                 </tr>
                             </tbody>
                         </table>
