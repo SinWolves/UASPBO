@@ -7,18 +7,15 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
     <!-- Horizontal Top Navbar -->
-    <ul class="navbar">
+ 	<ul class="navbar">
         <li><a>Studious</a></li>
-        <!-- <p th:if="${classLists != null}" th:text="'Jumlah kelas: ' + ${#lists.size(classLists)}"></p>
-        <p th:unless="${classLists != null}">Data tidak tersedia</p> -->
-        <!-- Above is the debug (now is solved)-->
-
         <form th:action="@{/logout}" method="post">
-            <button type="submit" class="btn-login">
-                <img src="../../img&icon/Logout_icn.png" alt="Icon">
+            <button type="submit" class="btn-logout">
+                <i class="fas fa-sign-out-alt"></i>
                 <span>Logout</span>
             </button>
         </form>
@@ -28,15 +25,17 @@
     <div class="content-container">
         <!-- Sidebar -->
         <ul class="sidebar">
-            <div class="sidebar-logo">
-                <img src="../../img&icon/Sidebar_logo.png" alt="Logo">
-            </div>
             <div class="user-profile">
-                <div class="user-name" th:text="${name}">(Full Name)</div>
-                <div class="user-status">Mahasiswa</div>
+                <div class="sidebar-logo">
+                    <img src="../../img&icon/Sidebar_logo.png" alt="User Avatar">
+                </div>
+                <div class="user-info">
+                    <div class="user-name" th:text="${name}">(Full Name)</div>
+                    <div class="user-status">Admin</div>
+                </div>
             </div>
-            <li><a th:href="@{/mahasiswa/home}">Your Class</a></li>
-            <li><a th:href="@{/mahasiswa/Class_list}" class="active">Class List</a></li>
+            <li><a th:href="@{/mahasiswa/home}"><i class="fas fa-user-graduate"></i>Your Class</a></li>
+            <li><a th:href="@{/mahasiswa/Class_list}" class="active"><i class="fas fa-school"></i>Class List</a></li>
         </ul>
 
         <!-- Main Content -->

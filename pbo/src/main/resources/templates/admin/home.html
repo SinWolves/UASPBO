@@ -7,14 +7,15 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
     <!-- Horizontal Top Navbar -->
     <ul class="navbar">
         <li><a>Studious</a></li>
         <form th:action="@{/logout}" method="post">
-            <button type="submit" class="btn-login">
-                <img src="../../img&icon/Logout_icn.png" alt="Icon">
+            <button type="submit" class="btn-logout">
+                <i class="fas fa-sign-out-alt"></i>
                 <span>Logout</span>
             </button>
         </form>
@@ -23,21 +24,19 @@
     <!-- Vertical Sidebar -->
     <div class="content-container">
         <ul class="sidebar">
-            <!-- Logo -->
-            <div class="sidebar-logo">
-                <img src="../../img&icon/Sidebar_logo.png" alt="Icon">
-            </div>
-            
-            <!-- User Profile Section -->
             <div class="user-profile">
-                <div class="user-name" th:text="${name}">(Full Name)</div>
-                <div class="user-status">Admin</div>
+                <div class="sidebar-logo">
+                    <img src="../../img&icon/Sidebar_logo.png" alt="User Avatar">
+                </div>
+                <div class="user-info">
+                    <div class="user-name" th:text="${name}">(Full Name)</div>
+                    <div class="user-status">Admin</div>
+                </div>
             </div>
-            
-            <!-- Menu Items -->
-            <li><a th:href="@{/admin/home}" class="active">Dosen</a></li>
-            <li><a th:href="@{/admin/mahasiswa}">Mahasiswa</a></li>
-            <li><a th:href="@{/admin/Class-list}">Kelas</a></li>
+
+            <li><a th:href="@{/admin/home}" class="active"><i class="fas fa-chalkboard-teacher"></i><span>Dosen</span></a></li>
+            <li><a th:href="@{/admin/mahasiswa}"><i class="fas fa-user-graduate"></i><span>Mahasiswa</span></a></li>
+            <li><a th:href="@{/admin/Class-list}"><i class="fas fa-school"></i><span>Kelas</span></a></li>
         </ul>
 
         <!-- Main Content -->

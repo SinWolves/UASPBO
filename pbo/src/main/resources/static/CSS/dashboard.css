@@ -10,17 +10,18 @@ body {
 .navbar {
     list-style-type: none;
     margin: 0;
-    padding: 0;
-    background-color: #fefefe;
+    padding: 0 30px; /* Add horizontal padding */
+    background-color: #F4F6F9;
     width: 100%;
     height: 70px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1); /* Softer shadow */
     position: fixed;
     top: 0;
     z-index: 1000;
+    box-sizing: border-box;
 }
 
 .navbar li {
@@ -28,10 +29,33 @@ body {
 }
 
 .navbar li a {
-    color: rgb(0, 0, 0);
+    color: #104F66; /* Dark blue for brand */
     text-decoration: none;
-    font-weight: bold;
-    font-size: 30px;
+    font-weight: 700; /* Bolder */
+    font-size: 24px;
+}
+
+.btn-logout {
+    border: none;
+    border-radius: 8px; /* Slightly more rounded */
+    padding: 10px 20px;
+    font-size: 15px;
+    cursor: pointer;
+    color: #ffffff;
+    background-color: #EF5350;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.btn-logout:hover {
+    background-color: #e53935; /* Darken on hover */
+    transform: translateY(-2px); /* Slight lift on hover */
+}
+
+.btn-logout i {
+    font-size: 16px;
 }
 
 .btn-login {
@@ -64,44 +88,61 @@ body {
 .sidebar {
     list-style-type: none;
     margin: 0;
-    padding: 0;
-    width: 250px;
-    background-color: #2171B1;
+    padding: 20px 0;
+    width: 260px; /* Slightly wider */
+    background: #2171B1;
     height: calc(100vh - 70px);
     position: fixed;
     overflow: auto;
-    box-shadow: 2px 0 5px rgba(0,0,0,0.1);
-    text-align: center;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .sidebar li a {
-    display: block;
-    color: #D7D6D6;
+    display: flex;
+    align-items: center;
+    gap: 15px; /* Space between icon and text */
+    color: #e0e0e0;
     padding: 15px 25px;
     text-decoration: none;
-    font-size: 18px;
-    transition: all 0.3s ease;
+    font-size: 17px;
+    font-weight: 500;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    border-left: 4px solid transparent; /* For active indicator */
 }
 
 .sidebar li a.active {
-    background-color: #104F66;
-    color: white;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+    border-left: 4px solid #FFC107; /* Yellow accent for active link */
 }
 
 .sidebar li a:hover:not(.active) {
-    background-color: #104F66;
-    color: white;
+    background-color: rgba(255, 255, 255, 0.05);
+    color: #ffffff;
 }
 
+.sidebar li a i {
+    font-size: 20px;
+    width: 20px; /* Fixed width for alignment */
+    text-align: center;
+}
+
+.sidebar-logo img {
+    width: 80px; /* Larger avatar */
+    height: 80px;
+    border-radius: 50%;
+    border: 3px solid rgba(255, 255, 255, 0.2);
+    margin-bottom: 10px;
+}
 
 .user-profile {
-  padding: 15px 25px;
-  text-align: center;
-  border-bottom: 1px solid #ddd;
-  margin-bottom: 15px;
-  color: #D7D6D6;
-  
+    padding: 20px;
+    text-align: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    margin-bottom: 15px;
+    color: #ffffff;
 }
+
 
 .user-name {
   font-weight: bold;
@@ -113,13 +154,24 @@ body {
   font-size: 20px;
   font-style: italic;
 }
+
+.user-info .user-name {
+    font-weight: 600;
+    font-size: 20px;
+    margin-bottom: 5px;
+}
+
+.user-info .user-status {
+    font-size: 14px;
+    color: #d7d6d6;
+}
 /******************************************************************************** Main Content ***********************************************************/
 .main-content {
-    margin-left: 250px; /* Same as sidebar width */
+    margin-left: 260px; /* Adjust to new sidebar width */
     padding: 30px;
-    width: calc(100% - 250px);
-    min-height: calc(100vh - 70px); /* Adjust if navbar height differs */
+    width: calc(100% - 260px);
 }
+
 .main-content h1{
     font-size: 30px;
     font-weight: normal;
