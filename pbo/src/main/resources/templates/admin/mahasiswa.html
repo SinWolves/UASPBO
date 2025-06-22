@@ -35,26 +35,26 @@
             </div>
             
             <!-- Menu Items -->
-            <li><a th:href="@{/admin/home}"><i class="fas fa-chalkboard-teacher"></i>Dosen</a></li>
-            <li><a th:href="@{/admin/mahasiswa}" class="active"><i class="fas fa-user-graduate"></i>Mahasiswa</a></li>
-            <li><a th:href="@{/admin/Class-list}"><i class="fas fa-school"></i>Kelas</a></li>
+            <li><a th:href="@{/admin/home}"><i class="fas fa-chalkboard-teacher"></i>Lecturer</a></li>
+            <li><a th:href="@{/admin/mahasiswa}" class="active"><i class="fas fa-user-graduate"></i>Student</a></li>
+            <li><a th:href="@{/admin/Class-list}"><i class="fas fa-school"></i>Class List</a></li>
         </ul>
 
 
         <!-- Main Content -->
         <div class="main-content">
-            <h1>Mahasiswa</h1>
+            <h1>Student</h1>
             <div class="content-box">
-                <h1>Approve Mahasiswa</h1>
+                <h1>Approve Student</h1>
                 <div class="table-container">
                     <table class="class-table">
                         <thead>
                             <tr>
                                 <th>NIM</th>
-                                <th>Nama</th>
+                                <th>Name</th>
                                 <th>Email</th>
-                                <th>Mata Kuliah</th>
-                                <th>Aksi</th>
+                                <th>Course Name</th>
+                                <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
