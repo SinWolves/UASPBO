@@ -28,13 +28,21 @@ public class LoginController {
 
     @PostMapping("/signup")
     public String registerUser(@RequestParam String identifier,
-                             @RequestParam String email,
-                             @RequestParam String name,
-                             @RequestParam String password,
-                             @RequestParam String role) {
-        userService.registerUser(identifier, email, name, password, role);
-        return "redirect:/login";
+                            @RequestParam String email,
+                            @RequestParam String name,
+                            @RequestParam String password,
+                            @RequestParam String role,
+                            org.springframework.ui.Model model) {
+        try {
+            userService.registerUser(identifier, email, name, password, role);
+            return "redirect:/login";
+        } catch (RuntimeException e) {
+            // Kirim pesan error ke halaman signup
+            model.addAttribute("errorMessage", e.getMessage());
+            return "signup";
+        }
     }
+
 
     // This is the only role-based logic that should be in this controller.
     @GetMapping("/redirect")
